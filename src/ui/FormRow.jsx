@@ -1,8 +1,3 @@
-/**
-
- * @format
- */
-
 /** @format */
 
 import styled, { css } from 'styled-components';
@@ -13,12 +8,16 @@ const StyledFormRow = styled.div`
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
   gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
+  padding: 1.6rem 0;
   /* &:first-child {
       padding-top: 0;
     } */
+
+  @media (max-width: 675px) {
+    grid-template-columns: 1fr;
+    padding: 1.4rem 0;
+    gap: 0.6rem;
+  }
 
   &:last-child {
     padding-bottom: 0;
@@ -26,6 +25,11 @@ const StyledFormRow = styled.div`
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
+
+    @media (max-width: 576px) {
+      padding: 0.8rem 0;
+      gap: 0.2rem;
+    }
   }
 
   &:has(button) {
@@ -46,6 +50,12 @@ const StyledFormRow = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
+
+  @media (max-width: 768px) {
+  }
+
+  @media (max-width: 320px) {
+  }
 `;
 
 function FormRow({ label, error, id, children, type }) {

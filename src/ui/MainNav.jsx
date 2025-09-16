@@ -96,7 +96,7 @@ const StyledNavLink = styled(NavLink)`
   }
 
   & span {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 500;
 
     /* Hide text on tablet/small laptop */

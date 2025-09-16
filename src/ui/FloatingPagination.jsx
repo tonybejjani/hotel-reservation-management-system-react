@@ -11,55 +11,11 @@ const FloatingContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-
-  /* Mobile Portrait: Above mobile nav */
-  @media (max-width: 639px) {
-    bottom: 8rem; /* Above 5.6rem mobile nav + margin */
-    display: block;
-  }
-
-  /* Phablet: Above taller mobile nav */
-  @media (min-width: 640px) and (max-width: 767px) {
-    bottom: 8.5rem; /* Above 6rem mobile nav + margin */
-    display: block;
-  }
+  bottom: 12rem;
 
   /* Tablet and up: Hide (use regular pagination) */
   @media (min-width: 768px) {
     display: none;
-  }
-
-  /* PWA Standalone: Much closer to bottom */
-  @media all and (display-mode: standalone) {
-    @media (max-width: 639px) {
-      bottom: 2.5rem; /* No mobile nav in PWA */
-    }
-
-    @media (min-width: 640px) and (max-width: 767px) {
-      bottom: 3rem; /* Slightly more space on phablets */
-    }
-  }
-
-  /* Safe area support for devices with notches */
-  @supports (bottom: env(safe-area-inset-bottom)) {
-    @media (max-width: 639px) {
-      bottom: calc(8rem + env(safe-area-inset-bottom));
-    }
-
-    @media (min-width: 640px) and (max-width: 767px) {
-      bottom: calc(8.5rem + env(safe-area-inset-bottom));
-    }
-
-    /* PWA with safe area */
-    @media all and (display-mode: standalone) {
-      @media (max-width: 639px) {
-        bottom: calc(2.5rem + env(safe-area-inset-bottom));
-      }
-
-      @media (min-width: 640px) and (max-width: 767px) {
-        bottom: calc(3rem + env(safe-area-inset-bottom));
-      }
-    }
   }
 `;
 
@@ -125,8 +81,8 @@ const FloatingButton = styled.button`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Better touch target for accessibility */
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 36px;
+  min-height: 36px;
 
   &:hover:not(:disabled) {
     background-color: rgba(255, 255, 255, 0.25);

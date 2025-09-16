@@ -20,6 +20,14 @@ const StyledConfirmDelete = styled.div`
     justify-content: flex-end;
     gap: 1.2rem;
   }
+
+  @media (max-width: 500px) {
+    width: 32rem;
+  }
+
+  @media (max-width: 427px) {
+    width: 24rem;
+  }
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {

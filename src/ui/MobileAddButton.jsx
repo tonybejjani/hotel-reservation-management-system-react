@@ -13,7 +13,7 @@ const FloatingActionButton = styled.button`
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 9rem; /* Above bottom navigation */
+    bottom: 17rem; /* Above bottom navigation */
     right: 2rem;
     width: 5.6rem;
     height: 5.6rem;
@@ -72,7 +72,7 @@ const FloatingActionButton = styled.button`
   @media (min-width: 640px) and (max-width: 767px) {
     width: 6rem;
     height: 6rem;
-    bottom: 10rem; /* Account for larger bottom nav */
+    /* Account for larger bottom nav */
     right: 2.4rem;
 
     svg {
@@ -86,61 +86,11 @@ const FloatingActionButton = styled.button`
     width: 5.2rem;
     height: 5.2rem;
     right: 1.6rem;
-    bottom: 8.5rem;
 
     svg {
       width: 2.2rem;
       height: 2.2rem;
     }
-  }
-
-  /* Safe area support for devices with notches */
-  @supports (bottom: env(safe-area-inset-bottom)) {
-    bottom: calc(12rem + env(safe-area-inset-bottom));
-
-    @media (min-width: 640px) and (max-width: 767px) {
-      bottom: calc(13rem + env(safe-area-inset-bottom));
-    }
-
-    @media (max-width: 380px) {
-      bottom: calc(10rem + env(safe-area-inset-bottom));
-    }
-  }
-`;
-
-const FABLabel = styled.span`
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--color-grey-900);
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border-radius: var(--border-radius-md);
-  font-size: 1.4rem;
-  font-weight: 500;
-  white-space: nowrap;
-  margin-right: 1.2rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  pointer-events: none;
-
-  /* Tooltip arrow */
-  &::after {
-    content: '';
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-left-color: var(--color-grey-900);
-  }
-
-  ${FloatingActionButton}:hover & {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(-50%) translateX(-0.4rem);
   }
 `;
 
@@ -149,7 +99,6 @@ function MobileAddButton() {
     <Modal>
       <Modal.Open opens="mobile-guest-form">
         <FloatingActionButton aria-label="Add new guest" title="Add new guest">
-          <FABLabel>Add Guest</FABLabel>
           <HiPlus />
         </FloatingActionButton>
       </Modal.Open>

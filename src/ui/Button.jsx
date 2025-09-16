@@ -6,6 +6,11 @@ import styled, { css } from 'styled-components';
 import { useDarkMode } from '../context/DarkModeContext';
 
 const sizes = {
+  smallForm: css`
+    font-size: 1.6rem;
+    padding: 1rem 1.4rem;
+    font-weight: 600;
+  `,
   small: css`
     font-size: 1.2rem;
     padding: 0.4rem 0.8rem;
@@ -25,6 +30,7 @@ const sizes = {
     padding: 1.2rem 1.6rem;
     font-weight: 500;
   `,
+
   large: css`
     font-size: 1.6rem;
     padding: 1.2rem 2.4rem;
@@ -74,6 +80,20 @@ const StyledButton = styled.button`
     css`
       ${sizes[props.size]}
     `}
+
+  @media (max-width: 576px) {
+    ${(props) =>
+      css`
+        ${sizes['smallForm']}
+      `}
+  }
+
+  @media (max-width: 320px) {
+    ${(props) =>
+      css`
+        ${sizes['smallForm']}
+      `}
+  }
 
   ${(props) =>
     css`

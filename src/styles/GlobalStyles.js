@@ -147,6 +147,8 @@ html {
   }
 }
 
+
+
 /* ===== BODY - MAIN ADDRESS BAR HIDING ===== */
 body {
   font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
@@ -167,6 +169,9 @@ body {
   text-rendering: optimizeLegibility;
   
 }
+
+
+
 
 
 /* ===== ENHANCED MOBILE OPTIMIZATIONS ===== */
@@ -325,23 +330,32 @@ img {
 }
 
 /* ===== RESPONSIVE TYPOGRAPHY ===== */
-@media (max-width: 768px) {
-  html {
-    font-size: 56.25%;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 50%;
-  }
-}
 
 @media (min-width: 1200px) {
   html {
     font-size: 68.75%;
   }
 }
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 62.5%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+/* @media (max-width: 480px) {
+  html {
+    font-size: 50%;
+  }
+} */
+
+
 
 @media (display-mode: standalone) {
   * {

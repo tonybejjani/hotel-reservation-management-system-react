@@ -3,6 +3,9 @@
 import styled, { css } from 'styled-components';
 
 const Form = styled.form`
+  overflow: hidden;
+  font-size: 1.6rem;
+
   ${(props) =>
     props.type === 'regular' &&
     css`
@@ -18,10 +21,24 @@ const Form = styled.form`
     props.type === 'modal' &&
     css`
       width: 80rem;
+
+      /* @media (max-width: 1200px) {
+        width: 70rem;
+      }*/
+
+      @media (max-width: 992px) {
+        width: 60rem;
+      }
+
+      @media (max-width: 675px) {
+        width: 34rem;
+      }
+
+      @media (max-width: 430px) {
+        width: 26rem;
+      }
+      /* font-size: 2.4rem; */
     `}
-    
-  overflow: hidden;
-  font-size: 1.4rem;
 `;
 
 Form.defaultProps = {

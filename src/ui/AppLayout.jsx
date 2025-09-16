@@ -45,6 +45,11 @@ const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
 
+  @media (min-width: 768px) {
+    overflow: auto;
+    height: 100%;
+  }
+
   @media (max-width: 768px) {
     padding: 2rem 2.4rem 3.2rem;
   }
@@ -76,6 +81,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+
+  @media (min-width: 768px) {
+    overflow-y: auto;
+  }
 
   /* Phablet: Slightly smaller gap */
   @media (min-width: 640px) and (max-width: 767px) {
