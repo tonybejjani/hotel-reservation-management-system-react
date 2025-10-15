@@ -133,7 +133,7 @@ function Guests() {
       <GuestsContainer />
 
       {/* Mobile: Floating Action Button */}
-      <MobileAddButton />
+      <MobileAddButton window="guest" />
     </StyledGuests>
   );
 }

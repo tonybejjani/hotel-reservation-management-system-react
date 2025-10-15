@@ -1,6 +1,6 @@
 /** @format */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledSelect = styled.select`
   font-size: 1.4rem;
@@ -14,11 +14,19 @@ const StyledSelect = styled.select`
   background-color: var(--color-grey-0);
   font-weight: 500;
   box-shadow: var(--shadow-sm);
+  ${(props) =>
+    props.mobile === true &&
+    css`
+      width: 100%;
+      padding: 2rem;
+      height: 6rem;
+      font-size: 1.6rem;
+    `}
 `;
 
 function Select({ options, value, ...props }) {
   return (
-    <StyledSelect value={value} {...props}>
+    <StyledSelect mobile={props.mobile} value={value} {...props}>
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}

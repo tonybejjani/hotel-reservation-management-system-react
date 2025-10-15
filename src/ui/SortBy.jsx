@@ -3,7 +3,7 @@
 import { useSearchParams } from 'react-router-dom';
 import Select from './Select';
 
-function SortBy({ options }) {
+function SortBy({ options, mobile }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortByValue = searchParams.get('sortBy') || 'name-asc';
@@ -15,6 +15,7 @@ function SortBy({ options }) {
 
   return (
     <Select
+      mobile={mobile}
       value={sortByValue}
       options={options}
       onChange={handleChange}

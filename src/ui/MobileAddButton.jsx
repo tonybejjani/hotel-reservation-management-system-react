@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { HiPlus } from 'react-icons/hi2';
 import Modal from './Modal';
 import CreateGuestForm from '../features/guests/CreateGuestForm';
+import CreateCabinForm from '../features/cabins/CreateCabinForm';
+import AddBooking from '../features/bookings/AddBooking';
 
 const FloatingActionButton = styled.button`
   display: none;
@@ -13,7 +15,7 @@ const FloatingActionButton = styled.button`
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 17rem; /* Above bottom navigation */
+    bottom: 24rem; /* Above bottom navigation */
     right: 2rem;
     width: 5.6rem;
     height: 5.6rem;
@@ -94,18 +96,44 @@ const FloatingActionButton = styled.button`
   }
 `;
 
-function MobileAddButton() {
+function MobileAddButton({ window }) {
   return (
     <Modal>
-      <Modal.Open opens="mobile-guest-form">
-        <FloatingActionButton aria-label="Add new guest" title="Add new guest">
+      <Modal.Open opens={`mobile-${window}-form`}>
+        <FloatingActionButton
+          aria-label={`Add new ${window}`}
+          title={`Add new ${window}`}
+        >
           <HiPlus />
         </FloatingActionButton>
       </Modal.Open>
 
-      <Modal.Window opens="mobile-guest-form" title="Add New Guest">
-        <CreateGuestForm />
-      </Modal.Window>
+      {window === 'guest' && (
+        <Modal.Window
+          opens={`mobile-${window}-form`}
+          title={`Add New ${window}`}
+        >
+          <CreateGuestForm />
+        </Modal.Window>
+      )}
+
+      {window === 'cabin' && (
+        <Modal.Window
+          opens={`mobile-${window}-form`}
+          title={`Add New ${window}`}
+        >
+          <CreateCabinForm />
+        </Modal.Window>
+      )}
+
+      {window === 'booking' && (
+        <Modal.Window
+          opens={`mobile-${window}-form`}
+          title={`Add New ${window}`}
+        >
+          <AddBooking />
+        </Modal.Window>
+      )}
     </Modal>
   );
 }

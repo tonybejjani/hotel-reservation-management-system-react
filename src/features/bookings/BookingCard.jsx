@@ -1,12 +1,13 @@
 /** @format */
 
 import styled from 'styled-components';
-import { HiPencil, HiTrash } from 'react-icons/hi2';
-import Modal from '../../ui/Modal';
-import Menus from '../../ui/Menus';
-import CreateCabinForm from './CreateCabinForm';
-import ConfirmDelete from '../../ui/ConfirmDelete';
-import useDeleteCabin from './useDeleteCabin';
+// import { HiPencil, HiTrash } from 'react-icons/hi2';
+// import Modal from '../../ui/Modal';
+// import Menus from '../../ui/Menus';
+// import CreateCabinForm from './CreateCabinForm';
+// import ConfirmDelete from '../../ui/ConfirmDelete';
+// import useDeleteCabin from './useDeleteCabin';
+import useDeleteBooking from './useDeleteBooking';
 
 const Card = styled.div`
   background-color: var(--color-grey-0);
@@ -97,30 +98,33 @@ const InfoValue = styled.span`
   }
 `;
 
-function CabinCard({ cabin = [] }) {
-  const { deleteCabin, isDeleting } = useDeleteCabin();
+function CabinCard({ booking = [] }) {
+  const { deleteCabin, isDeleting } = useDeleteBooking();
   const {
-    id: cabinId,
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    description,
-    image,
-  } = cabin;
+    id: bookingId,
+    created_at,
+    startDate,
+    endDate,
+    numNights,
+    numGuests,
+    totalPrice,
+    status,
+    guests: { fullName: guestName, email },
+    cabins: { name: cabinName },
+  } = booking;
 
   return (
     <>
       <Card>
         <CardHeader>
-          <CabinName>{name}</CabinName>
-          <CardActions>
+          <CabinName>{cabinName}</CabinName>
+          {/* <CardActions>
             <div>
               <Modal>
                 <Menus.Menu>
-                  <Menus.Toggle id={cabinId} />
+                  <Menus.Toggle id={bookingId} />
 
-                  <Menus.List id={cabinId}>
+                  <Menus.List id={bookingId}>
                     <Modal.Open opens="cabinForm">
                       <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
                     </Modal.Open>
@@ -143,9 +147,9 @@ function CabinCard({ cabin = [] }) {
                 </Menus.Menu>
               </Modal>
             </div>
-          </CardActions>
+          </CardActions> */}
         </CardHeader>
-        <CardInfo>
+        {/* <CardInfo>
           <InfoRow>
             <InfoLabel>Fits up to </InfoLabel>
             <InfoValue>{maxCapacity} guests</InfoValue>
@@ -162,14 +166,14 @@ function CabinCard({ cabin = [] }) {
           {/* <InfoRow>
               <InfoLabel>description</InfoLabel>
               <InfoValue>{description}</InfoValue>
-            </InfoRow> */}
+            </InfoRow> 
 
           <InfoRow>
             <InfoValue>
               <img src={image} alt={name} />
             </InfoValue>
           </InfoRow>
-        </CardInfo>
+        </CardInfo> */}
       </Card>
     </>
   );

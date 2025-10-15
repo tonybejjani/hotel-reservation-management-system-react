@@ -12,11 +12,22 @@ import styled from 'styled-components';
 import useCabins from '../features/cabins/useCabins';
 import Spinner from '../ui/Spinner';
 import MobileAddButton from '../ui/MobileAddButton';
+import MobileFilterButton from '../ui/MobileFilterButton';
+import MobileFilterSheet from '../ui/MobileFilterSheet';
+import { useState } from 'react';
 
 const DesktopView = styled.div`
   display: block;
 
   @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const TabletView = styled.div`
+  display: block;
+
+  @media (max-width: 767px) {
     display: none;
   }
 `;
@@ -38,6 +49,7 @@ const LoadingContainer = styled.div`
 
 function Cabins() {
   const { isLoading, cabins } = useCabins();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -47,15 +59,13 @@ function Cabins() {
     );
   }
 
-  console.log(cabins);
-
   return (
     <>
       <Row type="vertical">
         <Heading as="h1">Cabins</Heading>
-        <DesktopView>
-          <CabinTableOperations />
-        </DesktopView>
+        <TabletView>
+          <CabinTableOperations mobile={false} />
+        </TabletView>
       </Row>
       <Row>
         {/* Desktop Table View */}
@@ -66,10 +76,17 @@ function Cabins() {
         {/* Mobile/Tablet Cards View */}
         <MobileView>
           <CabinCards cabins={cabins} />
+          <MobileFilterButton onClick={() => setIsFilterOpen(true)} />
+          <MobileFilterSheet
+            open={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+          >
+            <CabinTableOperations mobile={true} />
+          </MobileFilterSheet>
         </MobileView>
 
         {/* Mobile: Floating Action Button */}
-        <MobileAddButton />
+        <MobileAddButton window="cabin" />
       </Row>
     </>
   );

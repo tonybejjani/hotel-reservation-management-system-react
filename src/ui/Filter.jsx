@@ -12,6 +12,13 @@ const StyledFilter = styled.div`
   padding: 0.4rem;
   display: flex;
   gap: 0.4rem;
+
+  ${(props) =>
+    props.mobile === true &&
+    css`
+      justify-content: space-around;
+      align-items: center;
+    `}
 `;
 
 const FilterButton = styled.button`
@@ -31,6 +38,15 @@ const FilterButton = styled.button`
     css`
       color: var(--color-brand-900);
     `}
+
+    ${(props) =>
+    props.mobile === true &&
+    css`
+      width: 100%;
+      padding: 4.2rem 0;
+    `}
+
+
 
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -53,7 +69,7 @@ const FilterButton = styled.button`
     `}
 `;
 
-function Filter({ filterField, options, defaultFilter }) {
+function Filter({ filterField, options, defaultFilter, mobile }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { isDarkMode } = useDarkMode();
@@ -77,6 +93,7 @@ function Filter({ filterField, options, defaultFilter }) {
     <StyledFilter>
       {options.map((option) => (
         <FilterButton
+          mobile={mobile}
           key={option.value}
           onClick={() => handleClick(option.value)}
           active={activeFilter === option.value ? 'activate' : ''}

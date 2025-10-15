@@ -30,6 +30,7 @@ const ButtonContentWrapper = styled.div`
 
 function BookingTableOperations() {
   const navigate = useNavigate();
+
   return (
     <TableOperations>
       <Filter

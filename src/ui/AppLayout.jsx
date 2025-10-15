@@ -81,6 +81,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+  margin-bottom: 10rem;
 
   @media (min-width: 768px) {
     overflow-y: auto;
