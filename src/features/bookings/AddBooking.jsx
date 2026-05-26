@@ -37,13 +37,29 @@ import { useGlobalContext } from '../../context/GlobalContext';
 import Textarea from '../../ui/Textarea';
 import { useDarkMode } from '../../context/DarkModeContext';
 
+const MainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 1.8rem;
+`;
+
+const SectionWrapper = styled.div`
+  /* border: 1px solid var(--color-grey-200); */
+  border-radius: 10px;
+`;
+
 const HeadingSection = styled.div`
   display: flex;
-  column-gap: 2em;
+  column-gap: 1rem;
   align-items: center;
-  margin-bottom: 0.4rem;
-  padding-bottom: 1.2rem;
-  border-bottom: 2px solid var(--color-grey-200);
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  padding-bottom: 1.6rem;
+  color: var(--color-grey-600);
+  border-bottom: solid 3px var(--color-grey-100);
+  /* background-color: var(--color-grey-200); */
 `;
 
 const StyledSelect = styled.select`
@@ -564,17 +580,19 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <HeadingSection>
-          <Heading as="h2">
-            <TitleWrapper>
-              {/* <NumberCircle>1</NumberCircle> */}
-              <span>Booking Details</span>
-            </TitleWrapper>
-          </Heading>
-        </HeadingSection>
+        <MainWrapper>
+          <SectionWrapper>
+            <HeadingSection>
+              <Heading as="h2">
+                <TitleWrapper>
+                  {/* <NumberCircle>1</NumberCircle> */}
+                  <span>Booking Details</span>
+                </TitleWrapper>
+              </Heading>
+            </HeadingSection>
 
-        <FormSection>
-          {/* <FormRow
+            <FormSection>
+              {/* <FormRow
             label={'Booking type*'}
             error={errors?.bookingTypeId?.message}
           >
@@ -595,220 +613,225 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
               ))}
             </StyledSelect>
           </FormRow> */}
-          <FormRow
-            label={'Booking Channel *'}
-            error={errors?.bookingMethodId?.message}
-          >
-            <StyledSelect
-              type="white"
-              id="bookingMethodId"
-              disabled={isWorking || isLoadingBookingMethods}
-              {...register('bookingMethodId', {
-                required: 'this field is required',
-              })}
-            >
-              <option value="">Select option...</option>
-              {bookingMethods.map((option) => (
-                <option value={option.id} key={option.id}>
-                  {option.label}
-                </option>
-              ))}
-            </StyledSelect>
-          </FormRow>
-          <FormRow label="Check in *" error={errors?.checkin?.message}>
-            <Input
-              type="date"
-              name="checkin"
-              id="checkin"
-              onChangeCapture={(e) => handleBookingDate(e, 'checkinDate')}
-              onBlurCapture={() => trigger(['checkin', 'checkout'])}
-              min={new Date().toLocaleString('fr-CA').substr(0, 10)}
-              {...register('checkin', {
-                required: 'this field is required',
-                validate: (value) => {
-                  if (!getValues().checkout) return;
-                  return (
-                    value <= getValues().checkout ||
-                    'Check in date should be earlier then check out date.'
-                  );
-                },
-              })}
-            />
-          </FormRow>
+              <FormRow
+                label={'Booking Channel *'}
+                error={errors?.bookingMethodId?.message}
+              >
+                <StyledSelect
+                  type="white"
+                  id="bookingMethodId"
+                  disabled={isWorking || isLoadingBookingMethods}
+                  {...register('bookingMethodId', {
+                    required: 'this field is required',
+                  })}
+                >
+                  <option value="">Select option...</option>
+                  {bookingMethods.map((option) => (
+                    <option value={option.id} key={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </StyledSelect>
+              </FormRow>
+              <FormRow label="Check in *" error={errors?.checkin?.message}>
+                <Input
+                  type="date"
+                  name="checkin"
+                  id="checkin"
+                  onChangeCapture={(e) => handleBookingDate(e, 'checkinDate')}
+                  onBlurCapture={() => trigger(['checkin', 'checkout'])}
+                  min={new Date().toLocaleString('fr-CA').substr(0, 10)}
+                  {...register('checkin', {
+                    required: 'this field is required',
+                    validate: (value) => {
+                      if (!getValues().checkout) return;
+                      return (
+                        value <= getValues().checkout ||
+                        'Check in date should be earlier then check out date.'
+                      );
+                    },
+                  })}
+                />
+              </FormRow>
 
-          <FormRow label="Check out *" error={errors?.checkout?.message}>
-            <Input
-              type="date"
-              name="checkout"
-              id="checkout"
-              onChangeCapture={(e) => handleBookingDate(e, 'checkoutDate')}
-              onBlurCapture={() => trigger(['checkin', 'checkout'])}
-              min={new Date().toLocaleString('fr-CA').substr(0, 10)}
-              {...register('checkout', {
-                required: 'this field is required',
-                validate: (value) => {
-                  if (!getValues().checkin) return;
-                  return (
-                    value > getValues().checkin ||
-                    'Check out date should be at least a day later then check in date.'
-                  );
-                },
-              })}
-            />
-          </FormRow>
-          <FormRow
-            label={'Number of nights'}
-            error={errors?.numNights?.message}
-          >
-            <Input
-              type="text"
-              id="numNights"
-              disabled
-              {...register('numNights', {
-                required: 'this field is required',
-              })}
-            />
-          </FormRow>
-          <FormRow
-            label={'Number of guests*'}
-            error={errors?.numGuests?.message}
-          >
-            <StyledSelect
-              id="numGuests"
-              type="white"
-              disabled={
-                isWorking || isLoadingSettings
-                // isWorking || isLoadingCabins || !cabinsAvailable || !numGuests
-              }
-              onChangeCapture={handleUserNumGuestsOption}
-              // onChangeCapture={handleUserNumGuests}
-              {...register('numGuests', {
-                required: 'this field is required',
-              })}
-            >
-              <option value="">Select option...</option>
-              {numGuests?.map((num) => (
-                <option value={num} key={num}>
-                  {num} guests
-                </option>
-              ))}
-            </StyledSelect>
-          </FormRow>
+              <FormRow label="Check out *" error={errors?.checkout?.message}>
+                <Input
+                  type="date"
+                  name="checkout"
+                  id="checkout"
+                  onChangeCapture={(e) => handleBookingDate(e, 'checkoutDate')}
+                  onBlurCapture={() => trigger(['checkin', 'checkout'])}
+                  min={new Date().toLocaleString('fr-CA').substr(0, 10)}
+                  {...register('checkout', {
+                    required: 'this field is required',
+                    validate: (value) => {
+                      if (!getValues().checkin) return;
+                      return (
+                        value > getValues().checkin ||
+                        'Check out date should be at least a day later then check in date.'
+                      );
+                    },
+                  })}
+                />
+              </FormRow>
+              <FormRow
+                label={'Number of nights'}
+                error={errors?.numNights?.message}
+              >
+                <Input
+                  type="text"
+                  id="numNights"
+                  disabled
+                  {...register('numNights', {
+                    required: 'this field is required',
+                  })}
+                />
+              </FormRow>
+              <FormRow
+                label={'Number of guests*'}
+                error={errors?.numGuests?.message}
+              >
+                <StyledSelect
+                  id="numGuests"
+                  type="white"
+                  disabled={
+                    isWorking || isLoadingSettings
+                    // isWorking || isLoadingCabins || !cabinsAvailable || !numGuests
+                  }
+                  onChangeCapture={handleUserNumGuestsOption}
+                  // onChangeCapture={handleUserNumGuests}
+                  {...register('numGuests', {
+                    required: 'this field is required',
+                  })}
+                >
+                  <option value="">Select option...</option>
+                  {numGuests?.map((num) => (
+                    <option value={num} key={num}>
+                      {num} guests
+                    </option>
+                  ))}
+                </StyledSelect>
+              </FormRow>
 
-          <FormRow label={'Available cabins*'} error={errors?.cabin?.message}>
-            <StyledSelect
-              id="cabin"
-              onChangeCapture={handleUserCabinOption}
-              type="white"
-              disabled={
-                isWorking ||
-                isLoadingCabins ||
-                isLoadingActiveBookings ||
-                !cabinsAvailable ||
-                !numGuests
-              }
-              {...register('cabin', {
-                required: 'this field is required',
-              })}
-            >
-              <option value="">Select option...</option>
-              {cabinsAvailable?.map((cabin) => (
-                <option value={cabin.id} key={cabin.id}>
-                  {`Up to ${cabin.maxCapacity} guests  — ${formatCurrency(
-                    cabin.regularPrice,
-                  )} — Cabin ${cabin.name} `}
-                </option>
-              ))}
-            </StyledSelect>
-          </FormRow>
+              <FormRow
+                label={'Available cabins*'}
+                error={errors?.cabin?.message}
+              >
+                <StyledSelect
+                  id="cabin"
+                  onChangeCapture={handleUserCabinOption}
+                  type="white"
+                  disabled={
+                    isWorking ||
+                    isLoadingCabins ||
+                    isLoadingActiveBookings ||
+                    !cabinsAvailable ||
+                    !numGuests
+                  }
+                  {...register('cabin', {
+                    required: 'this field is required',
+                  })}
+                >
+                  <option value="">Select option...</option>
+                  {cabinsAvailable?.map((cabin) => (
+                    <option value={cabin.id} key={cabin.id}>
+                      {`Up to ${cabin.maxCapacity} guests  — ${formatCurrency(
+                        cabin.regularPrice,
+                      )} — Cabin ${cabin.name} `}
+                    </option>
+                  ))}
+                </StyledSelect>
+              </FormRow>
 
-          <FormRow
-            label={'Include Breakfast'}
-            error={errors?.hasBreakfast?.message}
-          >
-            <RowWrapper>
-              <Input
-                type="checkbox"
-                id="hasBreakfast"
-                disabled={isWorking || isLoadingSettings || !userNumGuests}
-                onClick={handleIncludeBreakfast}
-                // onChangeCapture={handleUserNumGuests}
-                {...register('hasBreakfast')}
-              />
-              <span>
-                {formatCurrency(settings?.breakfastPrice)} / per guest
-              </span>
-            </RowWrapper>
-          </FormRow>
+              <FormRow
+                label={'Include Breakfast'}
+                error={errors?.hasBreakfast?.message}
+              >
+                <RowWrapper>
+                  <Input
+                    type="checkbox"
+                    id="hasBreakfast"
+                    disabled={isWorking || isLoadingSettings || !userNumGuests}
+                    onClick={handleIncludeBreakfast}
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('hasBreakfast')}
+                  />
+                  <span>
+                    {formatCurrency(settings?.breakfastPrice)} / per guest
+                  </span>
+                </RowWrapper>
+              </FormRow>
 
-          <FormRow
-            label={'Additional Information'}
-            error={errors?.observation?.message}
-          >
-            <Textarea
-              type="text"
-              id="observation"
-              disabled={isWorking}
-              {...register('observation')}
-              defaultValue=""
-            />
-          </FormRow>
-        </FormSection>
+              <FormRow
+                label={'Additional Information'}
+                error={errors?.observation?.message}
+              >
+                <Textarea
+                  type="text"
+                  id="observation"
+                  disabled={isWorking}
+                  {...register('observation')}
+                  defaultValue=""
+                />
+              </FormRow>
+            </FormSection>
+          </SectionWrapper>
 
-        <HeadingSection>
-          <Heading as="h2">
-            <TitleWrapper>
-              {/* <NumberCircle>2</NumberCircle> */}
-              <span>Guest Details</span>
-            </TitleWrapper>
-          </Heading>
-        </HeadingSection>
-        <FormSection title="Add Guest Info ">
-          <GuestWrapper>
-            <Modal>
-              <Modal.Open opens="searchGuest">
-                <SearchWrapper isDarkMode={isDarkMode}>
-                  <HiMiniMagnifyingGlass />
-                  <Button size="smallMedium">Search Guests</Button>
-                </SearchWrapper>
-              </Modal.Open>
+          <SectionWrapper>
+            <HeadingSection>
+              <Heading as="h2">
+                <TitleWrapper>
+                  {/* <NumberCircle>2</NumberCircle> */}
+                  <span>Guest Details</span>
+                </TitleWrapper>
+              </Heading>
+            </HeadingSection>
+            <FormSection title="Add Guest Info ">
+              <GuestWrapper>
+                <Modal>
+                  <Modal.Open opens="searchGuest">
+                    <SearchWrapper isDarkMode={isDarkMode}>
+                      <HiMiniMagnifyingGlass />
+                      <Button size="smallMedium">Search Guests</Button>
+                    </SearchWrapper>
+                  </Modal.Open>
 
-              <Modal.Open opens="addGuest">
-                <SearchWrapper isDarkMode={isDarkMode}>
-                  <HiMiniPlus />
-                  <Button size="smallMedium">Add New Guest</Button>
-                </SearchWrapper>
-              </Modal.Open>
+                  <Modal.Open opens="addGuest">
+                    <SearchWrapper isDarkMode={isDarkMode}>
+                      <HiMiniPlus />
+                      <Button size="smallMedium">Add New Guest</Button>
+                    </SearchWrapper>
+                  </Modal.Open>
 
-              {/* <Modal.Open opens="addGuest">
+                  {/* <Modal.Open opens="addGuest">
               <Button>Add Existing Guests</Button>
             </Modal.Open> */}
-              <Modal.Window opens="searchGuest">
-                <GuestsTablePicker />
-              </Modal.Window>
-              <Modal.Window opens="addGuest">
-                <CreateGuestForm />
-              </Modal.Window>
-            </Modal>
-            <FormRow error={errors?.fullName?.message}>
-              <Input
-                type="hidden"
-                id="guestId"
-                {...register('guestId', {
-                  required: 'this field is required',
-                })}
-              />
-              <Input
-                type="text"
-                id="fullName"
-                disabled
-                {...register('fullName', {
-                  required: 'this field is required',
-                })}
-              />
-            </FormRow>
-          </GuestWrapper>
-          {/* <FormRow label={'National ID'} error={errors?.nationalID?.message}>
+                  <Modal.Window opens="searchGuest">
+                    <GuestsTablePicker />
+                  </Modal.Window>
+                  <Modal.Window opens="addGuest">
+                    <CreateGuestForm />
+                  </Modal.Window>
+                </Modal>
+                <FormRow error={errors?.fullName?.message}>
+                  <Input
+                    type="hidden"
+                    id="guestId"
+                    {...register('guestId', {
+                      required: 'this field is required',
+                    })}
+                  />
+                  <Input
+                    type="text"
+                    id="fullName"
+                    disabled
+                    {...register('fullName', {
+                      required: 'this field is required',
+                    })}
+                  />
+                </FormRow>
+              </GuestWrapper>
+              {/* <FormRow label={'National ID'} error={errors?.nationalID?.message}>
             <Input
               type="text"
               id="nationalID"
@@ -839,117 +862,127 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
               })}
             />
           </FormRow> */}
-        </FormSection>
+            </FormSection>
+          </SectionWrapper>
 
-        <HeadingSection>
-          <Heading as="h2">
-            <TitleWrapper>
-              {/* <NumberCircle>3</NumberCircle> */}
-              <span>Payment Details</span>
-            </TitleWrapper>
-          </Heading>
-        </HeadingSection>
-        <PaymentSection>
-          <FormSection>
-            <FormRow
-              label={'Cabin Price*'}
-              error={errors?.cabinPriceFormat?.message}
-            >
-              <Input type="hidden" {...register('cabinPrice')} />
-              <Input
-                type="text"
-                id="cabinPriceFormat"
-                disabled
-                // onChangeCapture={handleUserNumGuests}
-                {...register('cabinPriceFormat')}
-              />
-            </FormRow>
-            <FormRow
-              label={'Cabin Discount'}
-              error={errors?.cabinDiscountFormat?.message}
-            >
-              <Input type="hidden" {...register('cabinDiscount')} />
-              <Input
-                type="text"
-                id="cabinDiscountFormat"
-                disabled
-                // onChangeCapture={handleUserNumGuests}
-                {...register('cabinDiscountFormat')}
-              />
-            </FormRow>
-            <FormRow
-              label={'Extras'}
-              error={errors?.extrasPriceFormat?.message}
-            >
-              <Input type="hidden" {...register('extrasPrice')} />
-              <Input
-                type="text"
-                id="extrasPriceFormat"
-                disabled
-                // onChangeCapture={handleUserNumGuests}
-                {...register('extrasPriceFormat')}
-              />
-            </FormRow>
-            <FormRow
-              label={'Total Price'}
-              error={errors?.totalPriceFormat?.message}
-            >
-              <Input type="hidden" {...register('totalPrice')} />
-              <Input
-                type="text"
-                id="totalPriceFormat"
-                disabled
-                // onChangeCapture={handleUserNumGuests}
-                {...register('totalPriceFormat')}
-              />
-            </FormRow>
-            <FormRow
-              label={'Payment Received*'}
-              error={errors?.ispaid?.message}
-            >
-              <Input
-                type="checkbox"
-                id="ispaid"
-                disabled={isWorking || disableIsPaid}
-                onChangeCapture={handleIsPaid}
-                // onChangeCapture={handleUserNumGuests}
-                {...register('ispaid')}
-              />
-              <input
-                type="hidden"
-                value={isPaidValue}
-                {...register('ispaidValue')}
-              />
-            </FormRow>
-          </FormSection>
-        </PaymentSection>
-        <HeadingSection>
-          <Heading as="h2">
-            <TitleWrapper>
-              {/* <NumberCircle>4</NumberCircle> */}
-              <span>Booking Status</span>
-            </TitleWrapper>
-          </Heading>
-        </HeadingSection>
-        <FormSection>
-          <FormRow label={'Booking Status*'} error={errors?.status?.message}>
-            <StyledSelect
-              id="status"
-              type="white"
-              disabled={isWorking || disableStatus}
-              // onChangeCapture={handleUserNumGuests}
-              {...register('status', {
-                required: isPaidValue
-                  ? 'this field is required'
-                  : 'Payment not received yet.',
-              })}
-            >
-              <option value="">Select option...</option>
-              <option value="unconfirmed">Unconfirmed</option>
-              <option value="checked-in">Check in</option>
-            </StyledSelect>
-          </FormRow>
-        </FormSection>
+          <SectionWrapper>
+            <HeadingSection>
+              <Heading as="h2">
+                <TitleWrapper>
+                  {/* <NumberCircle>3</NumberCircle> */}
+                  <span>Payment Details</span>
+                </TitleWrapper>
+              </Heading>
+            </HeadingSection>
+            <PaymentSection>
+              <FormSection>
+                <FormRow
+                  label={'Cabin Price*'}
+                  error={errors?.cabinPriceFormat?.message}
+                >
+                  <Input type="hidden" {...register('cabinPrice')} />
+                  <Input
+                    type="text"
+                    id="cabinPriceFormat"
+                    disabled
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('cabinPriceFormat')}
+                  />
+                </FormRow>
+                <FormRow
+                  label={'Cabin Discount'}
+                  error={errors?.cabinDiscountFormat?.message}
+                >
+                  <Input type="hidden" {...register('cabinDiscount')} />
+                  <Input
+                    type="text"
+                    id="cabinDiscountFormat"
+                    disabled
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('cabinDiscountFormat')}
+                  />
+                </FormRow>
+                <FormRow
+                  label={'Extras'}
+                  error={errors?.extrasPriceFormat?.message}
+                >
+                  <Input type="hidden" {...register('extrasPrice')} />
+                  <Input
+                    type="text"
+                    id="extrasPriceFormat"
+                    disabled
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('extrasPriceFormat')}
+                  />
+                </FormRow>
+                <FormRow
+                  label={'Total Price'}
+                  error={errors?.totalPriceFormat?.message}
+                >
+                  <Input type="hidden" {...register('totalPrice')} />
+                  <Input
+                    type="text"
+                    id="totalPriceFormat"
+                    disabled
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('totalPriceFormat')}
+                  />
+                </FormRow>
+                <FormRow
+                  label={'Payment Received*'}
+                  error={errors?.ispaid?.message}
+                >
+                  <Input
+                    type="checkbox"
+                    id="ispaid"
+                    disabled={isWorking || disableIsPaid}
+                    onChangeCapture={handleIsPaid}
+                    // onChangeCapture={handleUserNumGuests}
+                    {...register('ispaid')}
+                  />
+                  <input
+                    type="hidden"
+                    value={isPaidValue}
+                    {...register('ispaidValue')}
+                  />
+                </FormRow>
+              </FormSection>
+            </PaymentSection>
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <HeadingSection>
+              <Heading as="h2">
+                <TitleWrapper>
+                  {/* <NumberCircle>4</NumberCircle> */}
+                  <span>Booking Status</span>
+                </TitleWrapper>
+              </Heading>
+            </HeadingSection>
+            <FormSection>
+              <FormRow
+                label={'Booking Status*'}
+                error={errors?.status?.message}
+              >
+                <StyledSelect
+                  id="status"
+                  type="white"
+                  disabled={isWorking || disableStatus}
+                  // onChangeCapture={handleUserNumGuests}
+                  {...register('status', {
+                    required: isPaidValue
+                      ? 'this field is required'
+                      : 'Payment not received yet.',
+                  })}
+                >
+                  <option value="">Select option...</option>
+                  <option value="unconfirmed">Unconfirmed</option>
+                  <option value="checked-in">Check in</option>
+                </StyledSelect>
+              </FormRow>
+            </FormSection>
+          </SectionWrapper>
+        </MainWrapper>
 
         <FormRow>
           {/* type is an HTML attribute! */}
