@@ -151,7 +151,7 @@ html {
 
 /* ===== BODY - MAIN ADDRESS BAR HIDING ===== */
 body {
-  font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   letter-spacing: 0.2px;
   color: var(--color-grey-700);

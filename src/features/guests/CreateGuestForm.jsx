@@ -33,7 +33,7 @@ function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
               reset();
               onCloseModal?.();
             },
-          }
+          },
         )
       : createGuest(
           { ...data },
@@ -43,7 +43,7 @@ function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
               onCloseModal?.();
               setGuestRowData(data);
             },
-          }
+          },
         );
   }
 
@@ -116,8 +116,8 @@ function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
               ? 'Updating...'
               : 'Creating...'
             : isEditSession
-            ? 'Edit Guest'
-            : 'Create new Guest'}
+              ? 'Edit Guest'
+              : 'Add Guest'}
         </Button>
       </FormRow>
     </Form>

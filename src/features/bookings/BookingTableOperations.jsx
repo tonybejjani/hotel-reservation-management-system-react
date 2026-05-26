@@ -2,30 +2,19 @@
 
 import SortBy from '../../ui/SortBy';
 import Filter from '../../ui/Filter';
-import { HiMiniPlus } from 'react-icons/hi2';
 import TableOperations from '../../ui/TableOperations';
-import Button from '../../ui/Button';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ActionButton from '../../ui/ActionButton';
 import styled from 'styled-components';
 
-const ActionButton = styled.div`
+const ActionButtonWrapper = styled.div`
   margin-left: auto;
 
   & button {
-    box-shadow: 0 3px 6px 0 rgba(25, 27, 36, 0.16),
+    box-shadow:
+      0 3px 6px 0 rgba(25, 27, 36, 0.16),
       0 -1px 4px 0 rgba(25, 27, 36, 0.04);
   }
-  & svg {
-    scale: 1.8;
-  }
-`;
-
-const ButtonContentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  column-gap: 1rem;
-  padding: 0.2rem 0;
 `;
 
 function BookingTableOperations() {
@@ -55,15 +44,12 @@ function BookingTableOperations() {
           { value: 'totalPrice-asc', label: 'Sort by amount (low first)' },
         ]}
       />
-
-      <ActionButton>
-        <Button onClick={() => navigate('add-booking')}>
-          <ButtonContentWrapper>
-            <HiMiniPlus />
-            <span> Add New Booking</span>
-          </ButtonContentWrapper>
-        </Button>
-      </ActionButton>
+      <ActionButtonWrapper>
+        <ActionButton
+          actionText="Add New Booking"
+          onClick={() => navigate('add-booking')}
+        />
+      </ActionButtonWrapper>
     </TableOperations>
   );
 }

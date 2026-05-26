@@ -42,7 +42,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
               reset();
               onCloseModal?.();
             },
-          }
+          },
         )
       : createCabin(
           { ...data, image: image },
@@ -51,7 +51,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
               reset();
               onCloseModal?.();
             },
-          }
+          },
         );
   }
 
@@ -155,7 +155,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? 'Edit cabin' : 'Create new cabin'}
+          {isEditSession ? 'Edit cabin' : 'Add Cabin'}
         </Button>
       </FormRow>
     </Form>

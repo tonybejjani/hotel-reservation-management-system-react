@@ -1,7 +1,6 @@
 /** @format */
 
 import styled from 'styled-components';
-import { useState } from 'react';
 import Heading from '../ui/Heading';
 import GuestsContainer from '../features/guests/GuestsContainer';
 import AddGuest from '../features/guests/AddGuest';

@@ -227,7 +227,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
           id: booking.id,
           dates: getDatesBetween(
             new Date(booking.startDate),
-            new Date(booking.endDate)
+            new Date(booking.endDate),
           ),
           cabinId: booking.cabinId,
           cabin: booking.cabins.name,
@@ -311,7 +311,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
 
     const datesToReserve = getDatesBetween(
       new Date(startDate),
-      new Date(endDate) - 1
+      new Date(endDate) - 1,
     ).toString();
 
     if (startDate && endDate && startDate < endDate) {
@@ -323,6 +323,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
   function handleUserNumGuestsOption(e) {
     const numberGuestsPicked = e.target.value;
 
+    console.log(numberGuestsPicked);
     //reset all fields related to choosing a guest if no cabin choise is made or no number of guests has been picked
     if (!numberGuestsPicked) {
       setTotalExtrasPrice(0);
@@ -355,10 +356,23 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
     setUserNumGuests(numberGuestsPicked);
     setValue('numGuests', numberGuestsPicked);
     setValue('ispaid', false);
-
-    setDisableIsPaid(false);
+    setDisableIsPaid(true);
+    setValue('cabin', null);
+    setCabinsAvailable(null);
     setValue('status', null);
     setDisableStatus(true);
+
+    setValue('cabinPrice', null);
+    setValue('cabinPriceFormat', formatCurrency(0));
+
+    setValue('cabinDiscount', null);
+    setValue('cabinDiscountFormat', formatCurrency(0));
+
+    setValue('extrasPrice', 0);
+    setValue('extrasPriceFormat', formatCurrency(0));
+
+    setValue('totalPrice', 0);
+    setValue('totalPriceFormat', formatCurrency(0));
 
     if (getValues().hasBreakfast) {
       const totalExtrasPrice = calculateBreakfastTotal();
@@ -371,13 +385,13 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
 
     const datesToReserve = getDatesBetween(
       new Date(startDate),
-      new Date(endDate) - 1
+      new Date(endDate) - 1,
     ).toString();
 
     if (startDate && endDate && startDate < endDate) {
       const availableCabins = getAvailableCabins(
         datesToReserve,
-        numberGuestsPicked
+        numberGuestsPicked,
       );
 
       if (availableCabins) {
@@ -402,7 +416,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
     setValue('cabinDiscountFormat', formatCurrency(0));
 
     setValue('ispaid', false);
-    setDisableIsPaid(true);
+    setDisableIsPaid(false);
 
     setValue('status', null);
     setDisableStatus(true);
@@ -410,7 +424,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
     setValue('status', null);
     setDisableStatus(true);
 
-    // extrac the cabin from the list of cabins
+    // extract the cabin from the list of cabins
     const cabinId = Number(e.target.value);
 
     const cabin = cabins
@@ -459,7 +473,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
       setValue('totalPrice', totalPrice - getValues().extrasPrice);
       setValue(
         'totalPriceFormat',
-        formatCurrency(totalPrice - getValues().extrasPrice)
+        formatCurrency(totalPrice - getValues().extrasPrice),
       );
       setValue('extrasPrice', 0);
       setValue('extrasPriceFormat', formatCurrency(0));
@@ -500,7 +514,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
       setValue('totalPrice', totalPrice + getValues().extrasPrice);
       setValue(
         'totalPriceFormat',
-        formatCurrency(totalPrice + getValues().extrasPrice)
+        formatCurrency(totalPrice + getValues().extrasPrice),
       );
     }
   }
@@ -514,6 +528,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
 
       setDisableStatus(false);
     }
+
     console.log(getValues().ispaid);
   }
 
@@ -700,7 +715,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
               {cabinsAvailable?.map((cabin) => (
                 <option value={cabin.id} key={cabin.id}>
                   {`Up to ${cabin.maxCapacity} guests  — ${formatCurrency(
-                    cabin.regularPrice
+                    cabin.regularPrice,
                   )} — Cabin ${cabin.name} `}
                 </option>
               ))}
@@ -739,6 +754,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             />
           </FormRow>
         </FormSection>
+
         <HeadingSection>
           <Heading as="h2">
             <TitleWrapper>

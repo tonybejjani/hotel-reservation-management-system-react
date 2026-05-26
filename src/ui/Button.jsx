@@ -27,13 +27,12 @@ const sizes = {
   `,
   medium: css`
     font-size: 1.4rem;
-    padding: 1.2rem 1.6rem;
+    padding: 0.6rem 0.8rem;
     font-weight: 500;
   `,
-
   large: css`
     font-size: 1.6rem;
-    padding: 1.2rem 2.4rem;
+    padding: 0.8rem 2.4rem;
     font-weight: 500;
   `,
 };
@@ -76,29 +75,25 @@ const variations = {
 };
 
 const StyledButton = styled.button`
-  ${(props) =>
-    css`
-      ${sizes[props.size]}
-    `}
+  ${(props) => css`
+    ${sizes[props.size]}
+  `}
 
   @media (max-width: 576px) {
-    ${(props) =>
-      css`
-        ${sizes['smallForm']}
-      `}
+    ${(props) => css`
+      ${sizes['smallForm']}
+    `}
   }
 
   @media (max-width: 320px) {
-    ${(props) =>
-      css`
-        ${sizes['smallForm']}
-      `}
+    ${(props) => css`
+      ${sizes['smallForm']}
+    `}
   }
 
-  ${(props) =>
-    css`
-      ${variations[props.variation]}
-    `}
+  ${(props) => css`
+    ${variations[props.variation]}
+  `}
 
   border: none;
   border-radius: var(--border-radius-sm);
@@ -110,7 +105,12 @@ StyledButton.defaultProps = {
   size: 'medium',
 };
 
-function Button({ children, variation = 'primary', size, ...props }) {
+function Button({
+  children,
+  variation = 'primary',
+  size = 'medium',
+  ...props
+}) {
   const { isDarkMode } = useDarkMode();
 
   const mode = isDarkMode ? 'dark' : '';
@@ -120,7 +120,7 @@ function Button({ children, variation = 'primary', size, ...props }) {
   }`;
 
   return (
-    <StyledButton variation={variationMode} mode={mode} {...props}>
+    <StyledButton variation={variationMode} size={size} mode={mode} {...props}>
       {children}
     </StyledButton>
   );
