@@ -8,9 +8,17 @@ const StyledFormSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: right;
-  row-gap: 1rem;
-  padding: 1.6rem;
-  margin-bottom: 3.2rem;
+  row-gap: 2rem;
+
+  @media (min-width: 768px) {
+    padding: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 1.6rem;
+    margin-bottom: 3.2rem;
+  }
 `;
 
 function FormSection({ children, title, addActionBtns }) {

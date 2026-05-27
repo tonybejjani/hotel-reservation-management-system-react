@@ -44,9 +44,61 @@ const MainWrapper = styled.div`
   margin-top: 1.8rem;
 `;
 
-const SectionWrapper = styled.div`
-  /* border: 1px solid var(--color-grey-200); */
-  border-radius: 10px;
+const SectionWrapper = styled.div``;
+
+// Guest Section Responsive layout
+const GuestWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+
+  div {
+    padding-top: 0;
+  }
+
+  @media (min-width: 675px) {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 4.2rem;
+  }
+`;
+
+const GuestButtonsWrapper = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  gap: 1rem;
+  align-items: center;
+`;
+
+const MobileWrapper = styled.div`
+  span {
+    font-weight: 600;
+    color: var(--color-grey-600);
+  }
+  @media (min-width: 675px) {
+  }
+`;
+
+const LastActionRow = styled.div`
+  @media() {
+  }
+`;
+
+const CreateCancelWrapper = styled.div`
+  margin-top: 3.2rem;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  button:nth-child(1) {
+    grid-row: 2/3;
+    grid-column: 1;
+  }
+
+  @media (min-width: 430px) {
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 
 const HeadingSection = styled.div`
@@ -55,11 +107,15 @@ const HeadingSection = styled.div`
   align-items: center;
   font-size: 2.4rem;
   font-weight: 600;
-  margin-bottom: 0.8rem;
+  margin-bottom: 2.4rem;
   padding-bottom: 1.6rem;
   color: var(--color-grey-600);
   border-bottom: solid 3px var(--color-grey-100);
   /* background-color: var(--color-grey-200); */
+
+  @media (min-width: 1280px) {
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const StyledSelect = styled.select`
@@ -110,12 +166,6 @@ const SearchWrapper = styled.div`
   & button {
     padding-left: 3.2rem;
   }
-`;
-
-const GuestWrapper = styled.div`
-  display: flex;
-  column-gap: 2rem;
-  align-items: center;
 `;
 
 const RowWrapper = styled.div`
@@ -581,6 +631,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <MainWrapper>
+          {/* BOOKING SECTION*/}
           <SectionWrapper>
             <HeadingSection>
               <Heading as="h2">
@@ -777,6 +828,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             </FormSection>
           </SectionWrapper>
 
+          {/* GUEST SECTION*/}
           <SectionWrapper>
             <HeadingSection>
               <Heading as="h2">
@@ -788,31 +840,36 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             </HeadingSection>
             <FormSection title="Add Guest Info ">
               <GuestWrapper>
-                <Modal>
-                  <Modal.Open opens="searchGuest">
-                    <SearchWrapper isDarkMode={isDarkMode}>
-                      <HiMiniMagnifyingGlass />
-                      <Button size="smallMedium">Search Guests</Button>
-                    </SearchWrapper>
-                  </Modal.Open>
+                <GuestButtonsWrapper>
+                  <Modal>
+                    <Modal.Open opens="searchGuest">
+                      <SearchWrapper isDarkMode={isDarkMode}>
+                        <HiMiniMagnifyingGlass />
 
-                  <Modal.Open opens="addGuest">
-                    <SearchWrapper isDarkMode={isDarkMode}>
-                      <HiMiniPlus />
-                      <Button size="smallMedium">Add New Guest</Button>
-                    </SearchWrapper>
-                  </Modal.Open>
-
-                  {/* <Modal.Open opens="addGuest">
-              <Button>Add Existing Guests</Button>
-            </Modal.Open> */}
-                  <Modal.Window opens="searchGuest">
-                    <GuestsTablePicker />
-                  </Modal.Window>
-                  <Modal.Window opens="addGuest">
-                    <CreateGuestForm />
-                  </Modal.Window>
-                </Modal>
+                        <MobileWrapper>
+                          <Button size="smallForm">Search</Button>
+                        </MobileWrapper>
+                      </SearchWrapper>
+                    </Modal.Open>
+                    <MobileWrapper>
+                      <span>or</span>
+                    </MobileWrapper>
+                    <Modal.Open opens="addGuest">
+                      <SearchWrapper isDarkMode={isDarkMode}>
+                        <HiMiniPlus />
+                        <MobileWrapper>
+                          <Button size="smallForm">Add </Button>
+                        </MobileWrapper>
+                      </SearchWrapper>
+                    </Modal.Open>
+                    <Modal.Window opens="searchGuest">
+                      <GuestsTablePicker />
+                    </Modal.Window>
+                    <Modal.Window opens="addGuest">
+                      <CreateGuestForm />
+                    </Modal.Window>
+                  </Modal>
+                </GuestButtonsWrapper>
                 <FormRow error={errors?.fullName?.message}>
                   <Input
                     type="hidden"
@@ -831,6 +888,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
                   />
                 </FormRow>
               </GuestWrapper>
+
               {/* <FormRow label={'National ID'} error={errors?.nationalID?.message}>
             <Input
               type="text"
@@ -865,6 +923,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             </FormSection>
           </SectionWrapper>
 
+          {/* PAYMENT SECTION*/}
           <SectionWrapper>
             <HeadingSection>
               <Heading as="h2">
@@ -950,6 +1009,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             </PaymentSection>
           </SectionWrapper>
 
+          {/* STATUS SECTION*/}
           <SectionWrapper>
             <HeadingSection>
               <Heading as="h2">
@@ -984,20 +1044,23 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
           </SectionWrapper>
         </MainWrapper>
 
-        <FormRow>
+        <LastActionRow>
           {/* type is an HTML attribute! */}
-          <Button
-            variation="secondary"
-            type="reset"
-            onClick={() => navigate('/bookings')}
-          >
-            Cancel
-          </Button>
-          <Button disabled={isWorking}>
-            {/* {isEditSession ? 'Edit cabin' : 'Create new cabin'} */}
-            Create new booking
-          </Button>
-        </FormRow>
+          <CreateCancelWrapper>
+            <Button
+              variation="secondary"
+              size="smallForm"
+              type="reset"
+              onClick={() => navigate('/bookings')}
+            >
+              Cancel
+            </Button>
+            <Button disabled={isWorking} size="smallForm">
+              {/* {isEditSession ? 'Edit cabin' : 'Create new cabin'} */}
+              Create new booking
+            </Button>
+          </CreateCancelWrapper>
+        </LastActionRow>
       </Form>
     </>
   );
