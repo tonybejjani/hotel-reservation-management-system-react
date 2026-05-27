@@ -36,6 +36,7 @@ import CreateGuestForm from '../guests/CreateGuestForm';
 import { useGlobalContext } from '../../context/GlobalContext';
 import Textarea from '../../ui/Textarea';
 import { useDarkMode } from '../../context/DarkModeContext';
+import OneColumnWrapper from '../../ui/OneColumnWrapper';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -76,28 +77,6 @@ const MobileWrapper = styled.div`
     color: var(--color-grey-600);
   }
   @media (min-width: 675px) {
-  }
-`;
-
-const LastActionRow = styled.div`
-  @media() {
-  }
-`;
-
-const CreateCancelWrapper = styled.div`
-  margin-top: 3.2rem;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr;
-
-  button:nth-child(1) {
-    grid-row: 2/3;
-    grid-column: 1;
-  }
-
-  @media (min-width: 430px) {
-    display: flex;
-    justify-content: flex-end;
   }
 `;
 
@@ -1044,23 +1023,21 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
           </SectionWrapper>
         </MainWrapper>
 
-        <LastActionRow>
-          {/* type is an HTML attribute! */}
-          <CreateCancelWrapper>
-            <Button
-              variation="secondary"
-              size="smallForm"
-              type="reset"
-              onClick={() => navigate('/bookings')}
-            >
-              Cancel
-            </Button>
-            <Button disabled={isWorking} size="smallForm">
-              {/* {isEditSession ? 'Edit cabin' : 'Create new cabin'} */}
-              Create new booking
-            </Button>
-          </CreateCancelWrapper>
-        </LastActionRow>
+        {/* type is an HTML attribute! */}
+        <OneColumnWrapper>
+          <Button
+            variation="secondary"
+            size="smallForm"
+            type="reset"
+            onClick={() => navigate('/bookings')}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isWorking} size="smallForm">
+            {/* {isEditSession ? 'Edit cabin' : 'Create new cabin'} */}
+            Create new booking
+          </Button>
+        </OneColumnWrapper>
       </Form>
     </>
   );

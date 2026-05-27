@@ -10,6 +10,7 @@ import FormRow from '../../ui/FormRow';
 import { useForm } from 'react-hook-form';
 import useCreateCabin from './useCreateCabin';
 import useEditCabin from './useEditCabin';
+import OneColumnWrapper from '../../ui/OneColumnWrapper';
 
 // eslint-disable-next-line react/prop-types
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
@@ -145,19 +146,20 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow>
+      <OneColumnWrapper>
         {/* type is an HTML attribute! */}
         <Button
           variation="secondary"
           type="reset"
           onClick={() => onCloseModal?.()}
+          size="smallForm"
         >
           Cancel
         </Button>
-        <Button disabled={isWorking}>
+        <Button disabled={isWorking} size="smallForm">
           {isEditSession ? 'Edit cabin' : 'Add Cabin'}
         </Button>
-      </FormRow>
+      </OneColumnWrapper>
     </Form>
   );
 }

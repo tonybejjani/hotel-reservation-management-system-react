@@ -12,6 +12,7 @@ import { useState } from 'react';
 import BookingCards from './BookingCards';
 import useBookings from './useBookings';
 import Spinner from '../../ui/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const DesktopView = styled.div`
   display: block;
@@ -47,6 +48,7 @@ const LoadingContainer = styled.div`
 function BookingsMain() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { isLoading, bookings, count } = useBookings();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -83,7 +85,10 @@ function BookingsMain() {
         </MobileView>
 
         {/* Mobile: Floating Action Button */}
-        <MobileAddButton window="booking" />
+        <MobileAddButton
+          window="booking"
+          onClick={() => navigate('add-booking')}
+        />
       </Row>
     </>
   );

@@ -7,6 +7,7 @@ import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import useSignup from './useSignup';
 import toast from 'react-hot-toast';
+import OneColumnWrapper from '../../ui/OneColumnWrapper';
 
 function SignupForm() {
   const { register, handleSubmit, getValues, formState, reset } = useForm();
@@ -21,7 +22,7 @@ function SignupForm() {
       { fullName, email, password },
       {
         onSettled: reset,
-      }
+      },
     );
   }
   return (
@@ -81,18 +82,23 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow>
-        {/* type is an HTML attribute! */}
+      {/* type is an HTML attribute! */}
+
+      <OneColumnWrapper>
         <Button
           variation="secondary"
           type="reset"
           disabled={isLoading}
           onClick={reset}
+          size="SmallForm"
         >
-          Cancel
+          Cancel&nbsp;&nbsp;&nbsp;
         </Button>
-        <Button disabled={isLoading}>Create new user</Button>
-      </FormRow>
+
+        <Button disabled={isLoading} size="smallForm">
+          Create new user
+        </Button>
+      </OneColumnWrapper>
     </Form>
   );
 }

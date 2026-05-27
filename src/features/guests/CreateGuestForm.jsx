@@ -9,6 +9,7 @@ import useCreateGuest from './useCreateCabin';
 import useEditGuest from './useEditGuest';
 import { useGlobalContext } from '../../context/GlobalContext';
 import FormRow from '../../ui/FormRow';
+import OneColumnWrapper from '../../ui/OneColumnWrapper';
 
 function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
   const { createGuest, isCreating } = useCreateGuest();
@@ -101,16 +102,17 @@ function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow>
+      <OneColumnWrapper>
         <Button
           variation="secondary"
           type="button"
           onClick={() => onCloseModal?.()}
           disabled={isWorking}
+          size="smallForm"
         >
           Cancel
         </Button>
-        <Button disabled={isWorking}>
+        <Button disabled={isWorking} size="smallForm">
           {isWorking
             ? isEditSession
               ? 'Updating...'
@@ -119,7 +121,7 @@ function CreateGuestForm({ guestToEdit = {}, onCloseModal }) {
               ? 'Edit Guest'
               : 'Add Guest'}
         </Button>
-      </FormRow>
+      </OneColumnWrapper>
     </Form>
   );
 }

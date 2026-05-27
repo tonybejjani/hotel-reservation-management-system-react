@@ -6,6 +6,7 @@ import Modal from './Modal';
 import CreateGuestForm from '../features/guests/CreateGuestForm';
 import CreateCabinForm from '../features/cabins/CreateCabinForm';
 import AddBooking from '../features/bookings/AddBooking';
+import { useNavigate } from 'react-router-dom';
 
 const FloatingActionButton = styled.button`
   display: none;
@@ -96,45 +97,46 @@ const FloatingActionButton = styled.button`
   }
 `;
 
-function MobileAddButton({ window }) {
+function MobileAddButton({ window, ...props }) {
   return (
-    <Modal>
-      <Modal.Open opens={`mobile-${window}-form`}>
-        <FloatingActionButton
-          aria-label={`Add new ${window}`}
-          title={`Add new ${window}`}
-        >
+    <>
+      {window === 'booking' && (
+        <FloatingActionButton onClick={props.onClick}>
           <HiPlus />
         </FloatingActionButton>
-      </Modal.Open>
-
-      {window === 'guest' && (
-        <Modal.Window
-          opens={`mobile-${window}-form`}
-          title={`Add New ${window}`}
-        >
-          <CreateGuestForm />
-        </Modal.Window>
       )}
 
-      {window === 'cabin' && (
-        <Modal.Window
-          opens={`mobile-${window}-form`}
-          title={`Add New ${window}`}
-        >
-          <CreateCabinForm />
-        </Modal.Window>
-      )}
+      {(window === 'cabin' || window === 'guest') && (
+        <Modal>
+          <Modal.Open opens={`mobile-${window}-form`}>
+            <FloatingActionButton
+              aria-label={`Add new ${window}`}
+              title={`Add new ${window}`}
+            >
+              <HiPlus />
+            </FloatingActionButton>
+          </Modal.Open>
 
-      {window === 'booking' && (
-        <Modal.Window
-          opens={`mobile-${window}-form`}
-          title={`Add New ${window}`}
-        >
-          <AddBooking />
-        </Modal.Window>
+          {window === 'guest' && (
+            <Modal.Window
+              opens={`mobile-${window}-form`}
+              title={`Add New ${window}`}
+            >
+              <CreateGuestForm />
+            </Modal.Window>
+          )}
+
+          {window === 'cabin' && (
+            <Modal.Window
+              opens={`mobile-${window}-form`}
+              title={`Add New ${window}`}
+            >
+              <CreateCabinForm />
+            </Modal.Window>
+          )}
+        </Modal>
       )}
-    </Modal>
+    </>
   );
 }
 

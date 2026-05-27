@@ -43,6 +43,9 @@ const ButtonContentWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
+  font-size: 1.6rem;
+  padding: 1rem 1.4rem;
+  font-weight: 600;
   /* Hide entire component on mobile */
   @media (max-width: 767px) {
     display: none;
