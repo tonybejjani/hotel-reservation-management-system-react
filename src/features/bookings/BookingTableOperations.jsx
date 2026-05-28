@@ -46,7 +46,7 @@ function BookingTableOperations() {
       />
       <ActionButtonWrapper>
         <ActionButton
-          actionText="Add New Booking"
+          actionText="Add Booking"
           onClick={() => navigate('add-booking')}
         />
       </ActionButtonWrapper>

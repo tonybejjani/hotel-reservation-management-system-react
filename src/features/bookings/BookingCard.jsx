@@ -8,6 +8,24 @@ import styled from 'styled-components';
 // import ConfirmDelete from '../../ui/ConfirmDelete';
 // import useDeleteCabin from './useDeleteCabin';
 import useDeleteBooking from './useDeleteBooking';
+import Modal from '../../ui/Modal';
+import Menus from '../../ui/Menus';
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiEye,
+  HiTrash,
+  HiMiniCalendar,
+  HiOutlineMoon,
+  HiOutlineHomeModern,
+  HiOutlineCurrencyDollar,
+} from 'react-icons/hi2';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+import { useNavigate } from 'react-router-dom';
+import { useCheckout } from '../check-in-out/useCheckout';
+import { format, isToday } from 'date-fns';
+import { formatCurrency, formatDistanceFromNow } from '../../utils/helpers';
+import Tag from '../../ui/Tag';
 
 const Card = styled.div`
   background-color: var(--color-grey-0);
@@ -25,45 +43,26 @@ const Card = styled.div`
   }
 `;
 
+const Stacked = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  & span:first-child {
+    font-weight: 500;
+  }
+
+  & span:last-child {
+    color: var(--color-grey-500);
+    font-size: 1.2rem;
+  }
+`;
+
 const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-`;
-
-const CabinName = styled.h3`
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-grey-800);
-  /* margin-bottom: 0.4rem; */
-
-  /* background-color: var(--color-brand-50); */
-
-  border-radius: var(--border-radius-md);
-  @media (max-width: 767px) {
-    font-size: 1.8rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-`;
-
-const CabinId = styled.span`
-  font-size: 1.2rem;
-  color: var(--color-grey-500);
-  font-weight: 500;
-`;
-
-const CardActions = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`;
-
-const CardInfo = styled.div`
-  display: grid;
-  gap: 1rem;
 `;
 
 const InfoRow = styled.div`
@@ -92,14 +91,53 @@ const InfoValue = styled.span`
   font-size: 1.6rem;
   color: var(--color-grey-800);
   font-weight: 500;
+`;
 
-  @media (min-width: 767px) and (max-width: 1024px) {
-    font-size: 1.4rem;
+const GuestInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+
+  @media (min-width: 470px) {
+    font-size: 1.6rem;
   }
 `;
 
+const GuestName = styled.h3`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-grey-800);
+  border-radius: var(--border-radius-md);
+
+  @media (min-width: 470px) {
+    font-size: 1.8rem;
+  }
+`;
+
+const GuestEmail = styled.div``;
+
+const CardInfo = styled.div`
+  display: grid;
+  gap: 0.5rem;
+`;
+
+const Amount = styled.div`
+  font-family: 'Sono';
+  font-weight: 500;
+  font-size: 1.6rem;
+`;
+
 function CabinCard({ booking = [] }) {
-  const { deleteCabin, isDeleting } = useDeleteBooking();
+  const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
+
+  const navigate = useNavigate();
+  const statusToTagName = {
+    unconfirmed: 'blue',
+    'checked-in': 'green',
+    'checked-out': 'silver',
+  };
+
   const {
     id: bookingId,
     created_at,
@@ -117,63 +155,100 @@ function CabinCard({ booking = [] }) {
     <>
       <Card>
         <CardHeader>
-          <CabinName>{cabinName}</CabinName>
-          {/* <CardActions>
-            <div>
-              <Modal>
-                <Menus.Menu>
-                  <Menus.Toggle id={bookingId} />
+          <Stacked>
+            <Tag type={statusToTagName[status]}>
+              {status?.replace('-', ' ')}
+            </Tag>
+            <GuestInfo>
+              <GuestName>{guestName}</GuestName>
+              <GuestEmail>{email}</GuestEmail>
+            </GuestInfo>
+          </Stacked>
 
-                  <Menus.List id={bookingId}>
-                    <Modal.Open opens="cabinForm">
-                      <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-                    </Modal.Open>
-                    <Modal.Open opens="delete-form">
-                      <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-                    </Modal.Open>
-                  </Menus.List>
+          <Modal>
+            <Menus.Menu>
+              <Menus.Toggle id={bookingId} />
+              <Menus.List id={bookingId}>
+                <Menus.Button
+                  icon={<HiEye />}
+                  onClick={() => navigate(`/bookings/${bookingId}`)}
+                >
+                  See details
+                </Menus.Button>
 
-                  <Modal.Window opens="cabinForm" title="edit cabin ">
-                    <CreateCabinForm cabinToEdit={cabin} />
-                  </Modal.Window>
+                {status === 'unconfirmed' && (
+                  <Menus.Button
+                    icon={<HiArrowDownOnSquare />}
+                    onClick={() => navigate(`/checkin/${bookingId}`)}
+                  >
+                    Check in
+                  </Menus.Button>
+                )}
+                {status === 'checked-in' && (
+                  <Menus.Button
+                    icon={<HiArrowUpOnSquare />}
+                    disabled={isCheckingOut}
+                    onClick={() => checkout(bookingId)}
+                  >
+                    Check out
+                  </Menus.Button>
+                )}
 
-                  <Modal.Window opens="delete-form">
-                    <ConfirmDelete
-                      resourceName={`Cabin ` + name}
-                      disabled={isDeleting}
-                      onConfirm={() => deleteCabin(cabinId)}
-                    />
-                  </Modal.Window>
-                </Menus.Menu>
-              </Modal>
-            </div>
-          </CardActions> */}
+                <Modal.Open opens="delete-form">
+                  <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                </Modal.Open>
+              </Menus.List>
+
+              <Modal.Window name="delete" opens="delete-form">
+                <ConfirmDelete
+                  resourceName={`Booking #` + bookingId}
+                  disabled={isDeleting}
+                  onConfirm={() => deleteBooking(bookingId)}
+                />
+              </Modal.Window>
+            </Menus.Menu>
+          </Modal>
         </CardHeader>
-        {/* <CardInfo>
+        <CardInfo>
           <InfoRow>
-            <InfoLabel>Fits up to </InfoLabel>
-            <InfoValue>{maxCapacity} guests</InfoValue>
+            <InfoLabel>
+              <HiOutlineHomeModern size="25" />
+            </InfoLabel>
+            <Amount>{cabinName}</Amount>
           </InfoRow>
           <InfoRow>
-            <InfoLabel>Price </InfoLabel>
-            <InfoValue>{regularPrice}</InfoValue>
-          </InfoRow>
-          <InfoRow>
-            <InfoLabel>Discount</InfoLabel>
-            <InfoValue>{discount}</InfoValue>
-          </InfoRow>
-
-          {/* <InfoRow>
-              <InfoLabel>description</InfoLabel>
-              <InfoValue>{description}</InfoValue>
-            </InfoRow> 
-
-          <InfoRow>
+            <InfoLabel>
+              <HiMiniCalendar size="25" />
+            </InfoLabel>
             <InfoValue>
-              <img src={image} alt={name} />
+              <span>
+                {format(new Date(startDate), 'MM/dd/yyyy')} &mdash;{' '}
+                {format(new Date(endDate), 'MM/dd/yyyy')}
+              </span>
             </InfoValue>
           </InfoRow>
-        </CardInfo> */}
+          <InfoRow>
+            <InfoLabel>
+              <HiOutlineMoon size="25" />
+            </InfoLabel>
+            <InfoValue>
+              <span>
+                {isToday(new Date(startDate))
+                  ? 'Today'
+                  : ` ${numNights} night${numNights === 1 ? ' ' : 's'} stay`}
+              </span>
+            </InfoValue>
+          </InfoRow>
+
+          <InfoRow>
+            <InfoLabel>
+              <HiOutlineCurrencyDollar size="25" />
+            </InfoLabel>
+            <InfoValue>
+              <Amount>{formatCurrency(totalPrice)}</Amount>
+            </InfoValue>
+          </InfoRow>
+        </CardInfo>
       </Card>
     </>
   );

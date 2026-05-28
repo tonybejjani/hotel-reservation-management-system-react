@@ -464,10 +464,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
     setDisableIsPaid(false);
 
     setValue('status', null);
-    setDisableStatus(true);
-
-    setValue('status', null);
-    setDisableStatus(true);
+    setDisableStatus(false);
 
     // extract the cabin from the list of cabins
     const cabinId = Number(e.target.value);
@@ -569,7 +566,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
 
     if (isPaid) {
       setValue('ispaid', true);
-      setDisableIsPaid(true);
+      // setDisableIsPaid(true);
 
       setDisableStatus(false);
     }
