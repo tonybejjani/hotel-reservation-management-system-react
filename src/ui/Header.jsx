@@ -15,7 +15,7 @@ const StyledHeader = styled.header`
   justify-content: flex-end;
 
   /* Mobile and Tablet: Smaller gap */
-  @media (max-width: 1199px) {
+  @media (max-width: 1299px) {
     display: none;
   }
 `;

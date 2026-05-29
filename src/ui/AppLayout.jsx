@@ -11,10 +11,9 @@ const StyledAppLayout = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
   grid-template-rows: auto 1fr;
-  height: 100vh;
+  height: 100dvh;
 
   @media all and (display-mode: standalone) {
-    height: 100vh;
     height: 100dvh;
     min-height: unset;
     overflow: hidden;

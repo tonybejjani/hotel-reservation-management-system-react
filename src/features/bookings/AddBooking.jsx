@@ -2,7 +2,8 @@
 
 //// React Hooks
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 //// Custom Hooks
@@ -43,6 +44,8 @@ const MainWrapper = styled.div`
   flex-direction: column;
   gap: 5rem;
   margin-top: 1.8rem;
+
+  ${(props) => (props.isMobile === true ? 'margin: 20px; ' : '')}
 `;
 
 const SectionWrapper = styled.div``;
@@ -111,16 +114,16 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
-// const NumberCircle = styled.span`
-//   height: 3.2rem;
-//   width: 3.2rem;
-//   background-color: var(--color-brand-600);
-//   border-radius: 50%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: var(--color-brand-50);
-// `;
+const NumberCircle = styled.span`
+  height: 3.2rem;
+  width: 3.2rem;
+  background-color: var(--color-brand-600);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-brand-50);
+`;
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -174,7 +177,7 @@ const PaymentSection = styled.div`
   }
 `;
 // eslint-disable-next-line react/prop-types
-function AddBooking({ bookingToEdit = {}, onCloseModal }) {
+function AddBooking({ bookingToEdit = {}, onCloseModal, isMobile }) {
   const { guestRowData } = useGlobalContext();
   const { isDarkMode } = useDarkMode();
 
@@ -606,13 +609,13 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <MainWrapper>
+        <MainWrapper isMobile={isMobile}>
           {/* BOOKING SECTION*/}
           <SectionWrapper>
             <HeadingSection>
               <Heading as="h2">
                 <TitleWrapper>
-                  {/* <NumberCircle>1</NumberCircle> */}
+                  <NumberCircle>1</NumberCircle>
                   <span>Booking Details</span>
                 </TitleWrapper>
               </Heading>
@@ -809,7 +812,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             <HeadingSection>
               <Heading as="h2">
                 <TitleWrapper>
-                  {/* <NumberCircle>2</NumberCircle> */}
+                  <NumberCircle>2</NumberCircle>
                   <span>Guest Details</span>
                 </TitleWrapper>
               </Heading>
@@ -904,7 +907,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             <HeadingSection>
               <Heading as="h2">
                 <TitleWrapper>
-                  {/* <NumberCircle>3</NumberCircle> */}
+                  <NumberCircle>3</NumberCircle>
                   <span>Payment Details</span>
                 </TitleWrapper>
               </Heading>
@@ -990,7 +993,7 @@ function AddBooking({ bookingToEdit = {}, onCloseModal }) {
             <HeadingSection>
               <Heading as="h2">
                 <TitleWrapper>
-                  {/* <NumberCircle>4</NumberCircle> */}
+                  <NumberCircle>4</NumberCircle>
                   <span>Booking Status</span>
                 </TitleWrapper>
               </Heading>

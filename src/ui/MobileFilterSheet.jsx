@@ -14,6 +14,7 @@ const Overlay = styled.div`
 
 const Sheet = styled.div`
   position: fixed;
+
   left: 0;
   right: 0;
   bottom: 0;

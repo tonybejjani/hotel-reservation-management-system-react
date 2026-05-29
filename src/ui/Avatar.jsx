@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 const AvatarButton = styled.button`
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 4.8rem;
+  height: 4.8rem;
   border-radius: 50%;
   /* border: 2px solid var(--color-brand-600); */
   padding: 0;
@@ -19,6 +19,11 @@ const AvatarButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: 440px) {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
 
   &:hover {
     border-color: var(--color-brand-700);

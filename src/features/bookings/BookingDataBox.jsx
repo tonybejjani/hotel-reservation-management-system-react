@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 import { format, isToday } from 'date-fns';
 import {
+  HiMiniCalendar,
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
   HiOutlineCurrencyDollar,
@@ -25,17 +26,24 @@ const StyledBookingDataBox = styled.section`
 
 const MobileHeader = styled.header`
   background-color: var(--color-brand-500);
-  padding: 2rem 4rem;
+  padding: 2rem 2rem;
   color: #e0e7ff;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 500;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  row-gap: 1.2rem;
 
   svg {
-    height: 3.2rem;
-    width: 3.2rem;
+    height: 2.4rem;
+    width: 2.4rem;
+
+    @media (min-width: 440px) {
+      height: 3.2rem;
+      width: 3.2rem;
+    }
   }
 
   & div:first-child {
@@ -43,13 +51,44 @@ const MobileHeader = styled.header`
     align-items: center;
     gap: 1.6rem;
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+
+    @media (min-width: 1024px) {
+      font-size: 1.8rem;
+    }
   }
 
   & span {
     font-family: 'Sono';
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-left: 4px;
+
+    @media (min-width: 1024px) {
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.8rem;
+  }
+
+  @media (min-width: 440px) {
+    padding: 2rem 4rem;
+    row-gap: 1.8rem;
+  }
+`;
+
+const DateWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  gap: 1.6rem;
+
+  @media (min-width: 670px) {
   }
 `;
 
@@ -59,6 +98,7 @@ const Section = styled.section`
 
 const Guest = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1.2rem;
   margin-bottom: 1.6rem;
@@ -68,15 +108,32 @@ const Guest = styled.div`
     font-weight: 500;
     color: var(--color-grey-700);
   }
+
+  @media (min-width: 670px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+    color: var(--color-grey-500);
+  }
 `;
 
+const Bullet = styled.span`
+  display: none;
+
+  @media (min-width: 1024px) {
+    display: inline;
+  }
+`;
 const Price = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.6rem 3.2rem;
+  font-size: 1.4rem;
+  padding: 0.8rem 2.4rem 2.4rem 2.4rem;
   border-radius: var(--border-radius-sm);
-  margin-top: 2.4rem;
+  margin-top: 1.2rem;
+
+  text-align: center;
 
   background-color: ${(props) =>
     props.isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
@@ -94,13 +151,45 @@ const Price = styled.div`
     width: 2.4rem;
     color: currentColor !important;
   }
+
+  @media (min-width: 670px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1.6rem 3.2rem;
+    border-radius: var(--border-radius-sm);
+    margin-top: 2.4rem;
+  }
+`;
+
+const PaidItem = styled.div`
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  background-color: ${(props) =>
+    props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)'};
+  color: ${(props) =>
+    props.isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
+
+  @media (min-width: 670px) {
+    background-color: transparent;
+    color: ${(props) =>
+      props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)'};
+  }
 `;
 
 const Footer = styled.footer`
   padding: 1.6rem 4rem;
   font-size: 1.2rem;
   color: var(--color-grey-500);
-  text-align: right;
+  text-align: center;
+
+  @media (min-width: 670px) {
+    text-align: right;
+  }
 `;
 
 // A purely presentational component
@@ -130,14 +219,16 @@ function BookingDataBox({ booking }) {
             {numNights} nights in Cabin <span>{cabinName}</span>
           </p>
         </div>
-
-        <p>
-          {format(new Date(startDate), 'EEE, MMM dd yyyy')} (
-          {isToday(new Date(startDate))
-            ? 'Today'
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), 'EEE, MMM dd yyyy')}
-        </p>
+        <DateWrapper>
+          <HiMiniCalendar />
+          <p>
+            {format(new Date(startDate), 'MM/dd/yyyy')} (
+            {isToday(new Date(startDate))
+              ? 'Today'
+              : formatDistanceFromNow(startDate)}
+            ) &mdash; {format(new Date(endDate), 'MM/dd/yyyy')}
+          </p>
+        </DateWrapper>
       </MobileHeader>
 
       <Section>
@@ -146,9 +237,9 @@ function BookingDataBox({ booking }) {
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ''}
           </p>
-          <span>&bull;</span>
+          <Bullet>&bull;</Bullet>
           <p>{email}</p>
-          <span>&bull;</span>
+          <Bullet>&bull;</Bullet>
           <p>National ID {nationalID}</p>
         </Guest>
 
@@ -175,7 +266,9 @@ function BookingDataBox({ booking }) {
               )} breakfast)`}
           </DataItem>
 
-          <p>{isPaid ? 'Paid' : 'Will pay at property'}</p>
+          <PaidItem isPaid={isPaid}>
+            {isPaid ? 'Paid' : 'Will pay at property'}
+          </PaidItem>
         </Price>
       </Section>
 

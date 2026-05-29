@@ -10,7 +10,7 @@ const Img = styled.img`
   ${(props) =>
     props.type === 'short' &&
     css`
-      @media (min-width: 768px) and (max-width: 1199px) {
+      @media (min-width: 768px) and (max-width: 1299px) {
         width: 70%;
         scale: 0.8;
         display: block;
@@ -29,7 +29,7 @@ const Img = styled.img`
   ${(props) =>
     props.type === 'default' &&
     css`
-      @media (min-width: 1200px) {
+      @media (min-width: 1300px) {
         width: 70%;
         scale: 0.7;
         display: block;

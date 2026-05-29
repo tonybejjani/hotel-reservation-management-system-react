@@ -21,17 +21,23 @@ const BottomNavContainer = styled.nav`
   left: 0;
   right: 0;
   z-index: 1000;
+  border-radius: 100px;
+  padding: 1.6rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.95) 0%,
     rgba(255, 255, 255, 0.9) 100%
   );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1),
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 -8px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  padding: 0.8rem 1rem 2rem 1rem; /* Extra bottom padding for home indicator */
 
   display: none;
 
@@ -42,8 +48,9 @@ const BottomNavContainer = styled.nav`
 
   /* Phablet: Enhanced styling */
   @media (min-width: 640px) and (max-width: 767px) {
-    padding: 1rem 1.5rem 2.5rem 1.5rem;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.15),
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    box-shadow:
+      0 -12px 40px rgba(0, 0, 0, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.5);
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
@@ -56,7 +63,8 @@ const BottomNavContainer = styled.nav`
       rgba(var(--color-grey-800-rgb), 0.9) 100%
     );
     border-top-color: rgba(var(--color-grey-600-rgb), 0.3);
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3),
+    box-shadow:
+      0 -8px 32px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
@@ -67,12 +75,14 @@ const BottomNavContainer = styled.nav`
       rgba(var(--color-grey-800-rgb), 0.9) 100%
     );
     border-top-color: rgba(var(--color-grey-600-rgb), 0.3);
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3),
+    box-shadow:
+      0 -8px 32px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
     /* Phablet dark mode enhancements */
     @media (min-width: 640px) and (max-width: 767px) {
-      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.4),
+      box-shadow:
+        0 -12px 40px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
   }
@@ -107,6 +117,13 @@ const TabItem = styled.li`
   }
 `;
 
+const VisibilityMobile = styled.div`
+  display: none;
+  @media (min-width: 440px) {
+    display: block;
+  }
+`;
+
 const StyledTabLink = styled(NavLink)`
   display: flex;
   flex-direction: column;
@@ -138,11 +155,11 @@ const StyledTabLink = styled(NavLink)`
 
   &.active {
     color: var(--color-brand-600);
-
+    /* 
     &::before {
       content: '';
       position: absolute;
-      top: -0.8rem;
+      top: -0.2rem;
       left: 50%;
       transform: translateX(-50%);
       width: 3rem;
@@ -152,27 +169,27 @@ const StyledTabLink = styled(NavLink)`
         var(--color-brand-500),
         var(--color-brand-600)
       );
-      border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+      border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm); */
 
-      /* Phablet: Enhanced active indicator */
-      @media (min-width: 640px) and (max-width: 767px) {
+    /* Phablet: Enhanced active indicator */
+    /* @media (min-width: 640px) and (max-width: 767px) {
         top: -1rem;
         width: 3.5rem;
         height: 0.4rem;
-      }
-    }
+      } 
+    }*/
   }
 
   svg {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 3rem;
+    height: 3rem;
     transition: all 0.3s ease;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 
     /* Phablet: Larger icons */
     @media (min-width: 640px) and (max-width: 767px) {
-      width: 2.6rem;
-      height: 2.6rem;
+      width: 3rem;
+      height: 3rem;
     }
   }
 
@@ -200,7 +217,7 @@ const StyledTabLink = styled(NavLink)`
   }
 
   /* Hide labels on very small screens */
-  @media (max-width: 380px) {
+  @media (max-width: 440px) {
     span {
       display: none;
     }
@@ -550,17 +567,19 @@ function MobileNav() {
           ))}
 
           {/* More button */}
-          <TabItem>
-            <MoreButton
-              onClick={handleMenuToggle}
-              className={isMenuOpen ? 'active' : ''}
-              aria-label="More navigation options"
-              aria-expanded={isMenuOpen}
-            >
-              <HiEllipsisHorizontal />
-              <span>More</span>
-            </MoreButton>
-          </TabItem>
+          <VisibilityMobile>
+            <TabItem>
+              <MoreButton
+                onClick={handleMenuToggle}
+                className={isMenuOpen ? 'active' : ''}
+                aria-label="More navigation options"
+                aria-expanded={isMenuOpen}
+              >
+                <HiEllipsisHorizontal />
+                <span>More</span>
+              </MoreButton>
+            </TabItem>
+          </VisibilityMobile>
         </TabList>
       </BottomNavContainer>
 

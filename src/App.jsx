@@ -69,6 +69,16 @@ function App() {
                 <Route path="account" element={<Account />} />
               </Route>
 
+              {/* Standalone Mobile Page */}
+              <Route
+                path="add-booking-mobile"
+                element={
+                  <ProtectedRoute>
+                    <NewBooking />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route path="login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

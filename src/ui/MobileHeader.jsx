@@ -9,7 +9,7 @@ import LogoMobile from './LogoMobile';
 
 const StyledMobileHeader = styled.header`
   background-color: var(--color-grey-0);
-  padding: 1rem 1.6rem 1rem 0;
+  padding: 2.4rem 1.6rem 2.4rem 0;
   border-bottom: 1px solid var(--color-grey-200);
   display: none;
   align-items: center;
@@ -17,7 +17,7 @@ const StyledMobileHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
-  height: 5.6rem;
+  height: 6.4rem;
   transition: all 0.3s ease;
 
   @media (max-width: 767px) {
@@ -28,7 +28,8 @@ const StyledMobileHeader = styled.header`
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  scale: 0.8;
+  scale: 1;
+  padding-left: 2rem;
 `;
 
 const AvatarContainer = styled.div`

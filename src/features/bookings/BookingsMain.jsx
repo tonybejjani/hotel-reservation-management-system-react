@@ -87,7 +87,13 @@ function BookingsMain() {
         {/* Mobile: Floating Action Button */}
         <MobileAddButton
           window="booking"
-          onClick={() => navigate('add-booking')}
+          onClick={() =>
+            navigate('/add-booking-mobile', {
+              state: {
+                isMobileView: true,
+              },
+            })
+          }
         />
       </Row>
     </>

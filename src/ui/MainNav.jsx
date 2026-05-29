@@ -35,7 +35,7 @@ const NavList = styled.ul`
   padding: 0;
 
   /* Tablet/Small Laptop: Tighter spacing */
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 768px) and (max-width: 1299px) {
     gap: 0.8rem;
   }
 `;
@@ -44,7 +44,7 @@ const UserNavList = styled(NavList)`
   display: none;
 
   /* Tablet/Small Laptop: display true */
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 768px) and (max-width: 1299px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +64,7 @@ const StyledNavLink = styled(NavLink)`
     position: relative;
 
     /* Tablet/Small Laptop: Icon-only styling */
-    @media (min-width: 768px) and (max-width: 1199px) {
+    @media (min-width: 768px) and (max-width: 1299px) {
       padding: 1.2rem;
       justify-content: center;
       gap: 0;
@@ -100,7 +100,7 @@ const StyledNavLink = styled(NavLink)`
     font-weight: 500;
 
     /* Hide text on tablet/small laptop */
-    @media (min-width: 768px) and (max-width: 1199px) {
+    @media (min-width: 768px) and (max-width: 1299px) {
       display: none;
     }
   }
@@ -125,18 +125,18 @@ const StyledNavLink = styled(NavLink)`
     z-index: 1000;
 
     /* Show tooltip only on tablet/small laptop hover */
-    @media (min-width: 768px) and (max-width: 1199px) {
+    @media (min-width: 768px) and (max-width: 1299px) {
       /* Tooltip will show on hover */
     }
 
     /* Hide on desktop */
-    @media (min-width: 1200px) {
+    @media (min-width: 1300px) {
       display: none;
     }
   }
 
   /* Show tooltip on hover for tablet/small laptop */
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 768px) and (max-width: 1299px) {
     &:hover::after {
       opacity: 1;
       visibility: visible;

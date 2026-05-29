@@ -1,10 +1,23 @@
-import styled from "styled-components";
+/** @format */
+
+import styled from 'styled-components';
 
 const StyledDataItem = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 1.6rem;
   padding: 0.8rem 0;
+
+  @media (min-width: 670px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1.6rem;
+    padding: 0.8rem 0;
+  }
 `;
 
 const Label = styled.span`

@@ -25,7 +25,7 @@ const ButtonContentWrapper = styled.div`
     font-weight: 500;
 
     /* Hide text on smaller tablets if needed */
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       display: none;
     }
   }

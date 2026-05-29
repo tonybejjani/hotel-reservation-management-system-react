@@ -21,13 +21,13 @@ const StyledSidebar = styled.aside`
   }
 
   /* Desktop: Full width */
-  @media (min-width: 1200px) {
+  @media (min-width: 1300px) {
     width: 26rem;
     padding-top: 6.4rem;
   }
 
   /* Tablet/Small Laptop: Icon-only width */
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 768px) and (max-width: 1299px) {
     width: 7rem;
     padding: 1.6rem 0.8rem;
     gap: 2.4rem;
