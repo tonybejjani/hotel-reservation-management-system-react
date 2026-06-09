@@ -9,7 +9,7 @@ import Header from './Header';
 
 const StyledAppLayout = styled.div`
   display: grid;
-  grid-template-columns: 26rem 1fr;
+  grid-template-columns: 7rem 1fr;
   grid-template-rows: auto 1fr;
   height: 100dvh;
 
@@ -18,8 +18,9 @@ const StyledAppLayout = styled.div`
     min-height: unset;
     overflow: hidden;
   }
+
   /* Desktop: Full sidebar */
-  @media (min-width: 1200px) {
+  @media (min-width: 1279px) {
     grid-template-columns: 26rem 1fr;
   }
 

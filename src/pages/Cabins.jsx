@@ -15,6 +15,7 @@ import MobileAddButton from '../ui/MobileAddButton';
 import MobileFilterButton from '../ui/MobileFilterButton';
 import MobileFilterSheet from '../ui/MobileFilterSheet';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DesktopView = styled.div`
   display: block;
@@ -50,6 +51,7 @@ const LoadingContainer = styled.div`
 function Cabins() {
   const { isLoading, cabins } = useCabins();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -86,7 +88,16 @@ function Cabins() {
         </MobileView>
 
         {/* Mobile: Floating Action Button */}
-        <MobileAddButton window="cabin" />
+        <MobileAddButton
+          window="cabin"
+          onClick={() =>
+            navigate('/add-cabin-mobile', {
+              state: {
+                isMobileView: true,
+              },
+            })
+          }
+        />
       </Row>
     </>
   );

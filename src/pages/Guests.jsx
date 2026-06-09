@@ -6,6 +6,7 @@ import GuestsContainer from '../features/guests/GuestsContainer';
 import AddGuest from '../features/guests/AddGuest';
 import GuestsSearchBar from '../features/guests/GuestsSearchBar';
 import MobileAddButton from '../ui/MobileAddButton';
+import { useNavigate } from 'react-router-dom';
 
 const StyledGuests = styled.div`
   padding: 2rem 0;
@@ -102,6 +103,7 @@ const SearchRow = styled.div`
 `;
 
 function Guests() {
+  const navigate = useNavigate();
   return (
     <StyledGuests>
       <PageHeader>
@@ -127,12 +129,21 @@ function Guests() {
       </PageHeader>
 
       {/* Mobile: Sticky search bar */}
-      <GuestsSearchBar mobile />
+      {/* <GuestsSearchBar mobile /> */}
 
       <GuestsContainer />
 
       {/* Mobile: Floating Action Button */}
-      <MobileAddButton window="guest" />
+      <MobileAddButton
+        window="guest"
+        onClick={() =>
+          navigate('/add-guest-mobile', {
+            state: {
+              isMobileView: true,
+            },
+          })
+        }
+      />
     </StyledGuests>
   );
 }

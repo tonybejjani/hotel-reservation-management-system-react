@@ -23,6 +23,7 @@ import NewBooking from './pages/NewBooking';
 import Guests from './pages/Guests';
 import { GlobalProvider } from './context/GlobalContext';
 import BookingsMain from './features/bookings/BookingsMain';
+import SlideLeftPanel from './pages/SlideLeftPanel';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -74,7 +75,27 @@ function App() {
                 path="add-booking-mobile"
                 element={
                   <ProtectedRoute>
-                    <NewBooking />
+                    <SlideLeftPanel openWindow="add-booking" />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Standalone Mobile Page */}
+              <Route
+                path="add-guest-mobile"
+                element={
+                  <ProtectedRoute>
+                    <SlideLeftPanel openWindow="add-guest" />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Standalone Mobile Page */}
+              <Route
+                path="add-cabin-mobile"
+                element={
+                  <ProtectedRoute>
+                    <SlideLeftPanel openWindow="add-cabin" />
                   </ProtectedRoute>
                 }
               />

@@ -107,6 +107,21 @@ function MobileAddButton({ window, ...props }) {
       )}
 
       {(window === 'cabin' || window === 'guest') && (
+        <FloatingActionButton
+          aria-label={`Add new ${window}`}
+          title={`Add new ${window}`}
+          onClick={props.onClick}
+        >
+          <HiPlus />
+        </FloatingActionButton>
+      )}
+    </>
+  );
+}
+
+export default MobileAddButton;
+
+/* (
         <Modal>
           <Modal.Open opens={`mobile-${window}-form`}>
             <FloatingActionButton
@@ -135,9 +150,4 @@ function MobileAddButton({ window, ...props }) {
             </Modal.Window>
           )}
         </Modal>
-      )}
-    </>
-  );
-}
-
-export default MobileAddButton;
+      )} */
