@@ -26,6 +26,16 @@ const Box = styled.div`
   padding: 2.4rem 4rem;
 `;
 
+const MobileDisplay = styled.div`
+  width: 100%;
+  display: flex;
+  padding-right: 0.6rem;
+
+  @media (min-width: 750px) {
+    display: none;
+  }
+`;
+
 function CheckinBooking() {
   const [confirmPayment, setConfirmPayment] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
@@ -42,6 +52,9 @@ function CheckinBooking() {
     setAddBreakfast(booking?.hasBreakfast || false);
   }, [booking.hasBreakfast]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const moveBack = useMoveBack();
 
   if (isLoading || isLoadingSettings) return <Spinner />;
@@ -80,8 +93,11 @@ function CheckinBooking() {
   return (
     <>
       <Row type="horizontal">
+        <MobileDisplay>
+          <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+        </MobileDisplay>
+
         <Heading as="h1">Check in booking #{bookingId}</Heading>
-        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
       <BookingDataBox booking={booking} />
@@ -111,9 +127,9 @@ function CheckinBooking() {
           {!addBreakfast
             ? formatCurrency(totalPrice)
             : ` ${formatCurrency(
-                totalPrice + breakfastPrice
+                totalPrice + breakfastPrice,
               )} (${formatCurrency(totalPrice)} + ${formatCurrency(
-                breakfastPrice
+                breakfastPrice,
               )})`}
         </Checkbox>
       </Box>

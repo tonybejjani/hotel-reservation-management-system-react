@@ -1,7 +1,8 @@
 /** @format */
 
 import styled from 'styled-components';
-import { FaFilter } from 'react-icons/fa';
+
+import { LuListFilter } from 'react-icons/lu';
 
 const FilterButton = styled.button`
   position: fixed;
@@ -92,7 +93,7 @@ const FilterButton = styled.button`
 function MobileFilterButton({ onClick }) {
   return (
     <FilterButton aria-label="Filter cabins" onClick={onClick}>
-      <FaFilter />
+      <LuListFilter />
     </FilterButton>
   );
 }

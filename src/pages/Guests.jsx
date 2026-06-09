@@ -7,6 +7,7 @@ import AddGuest from '../features/guests/AddGuest';
 import GuestsSearchBar from '../features/guests/GuestsSearchBar';
 import MobileAddButton from '../ui/MobileAddButton';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const StyledGuests = styled.div`
   padding: 2rem 0;
@@ -104,6 +105,9 @@ const SearchRow = styled.div`
 
 function Guests() {
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <StyledGuests>
       <PageHeader>

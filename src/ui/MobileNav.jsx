@@ -22,10 +22,10 @@ const BottomNavContainer = styled.nav`
   right: 0;
   z-index: 1000;
   border-radius: 100px;
-  padding: 1.6rem;
+  padding: 0.8rem 0.5rem 1rem 0.5rem;
   margin-bottom: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
 
   background: linear-gradient(
     135deg,
@@ -136,7 +136,7 @@ const StyledTabLink = styled(NavLink)`
   color: var(--color-grey-500);
   text-decoration: none;
   border-radius: var(--border-radius-md);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 
   /* Phablet: Enhanced sizing */
@@ -154,7 +154,17 @@ const StyledTabLink = styled(NavLink)`
   }
 
   &.active {
-    color: var(--color-brand-600);
+    color: var(--color-grey-50);
+    border-radius: 18px;
+    padding: 1rem 2rem 1rem 2rem;
+
+    background: var(--color-brand-600);
+
+    .dark-mode & {
+      color: var(--color-brand-700);
+      background: var(--color-brand-100);
+    }
+
     /* 
     &::before {
       content: '';

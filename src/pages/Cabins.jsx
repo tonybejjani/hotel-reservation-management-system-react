@@ -14,7 +14,7 @@ import Spinner from '../ui/Spinner';
 import MobileAddButton from '../ui/MobileAddButton';
 import MobileFilterButton from '../ui/MobileFilterButton';
 import MobileFilterSheet from '../ui/MobileFilterSheet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const DesktopView = styled.div`
@@ -53,6 +53,9 @@ function Cabins() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   if (isLoading) {
     return (
       <LoadingContainer>

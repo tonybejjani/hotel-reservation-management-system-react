@@ -11,20 +11,23 @@ import { useEffect } from 'react';
 import { HiMiniXCircle } from 'react-icons/hi2';
 import CreateGuestFormMobile from '../features/guests/CreateGuestFormMobile';
 import CreateCabinFormMobile from '../features/cabins/CreateCabinFormMobile';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Stacked = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  padding: 1.4rem 2rem 0 2rem;
   ${(props) =>
     props.isMobile === true
       ? 'margin: 0rem 2rem 2rem 2rem; '
       : 'margin-bottom: 2rem;'}
 
   ${(props) =>
+    props.isDarkMode === true ? 'background-color: var(--color-grey-0);' : ''};
+  ${(props) =>
     props.isMobile === true
-      ? 'position: sticky; top: 0;  z-index:1000; background: linear-gradient(135deg,rgba(255, 255, 255, 0.95) 0%,rgba(255, 255, 255, 0.9) 100%);backdrop-filter: blur(40px);-webkit-backdrop-filter: blur(10px);  padding-top:2rem;'
+      ? 'position: sticky; top: 0;  z-index:1000; backdrop-filter: blur(40px);-webkit-backdrop-filter: blur(10px);  padding-top:2rem;'
       : ''}
 `;
 
@@ -68,7 +71,9 @@ function SlideLeftPanel({ openWindow }) {
   const moveBack = useMoveBack();
   const location = useLocation();
   const isMobileView = location.state?.isMobileView;
+  const { isDarkMode } = useDarkMode();
 
+  console.log(isDarkMode);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -83,7 +88,7 @@ function SlideLeftPanel({ openWindow }) {
       }}
     >
       <PageWrapper>
-        <Stacked isMobile={isMobileView}>
+        <Stacked isMobile={isMobileView} isDarkMode={isDarkMode}>
           <Row type="horizontal">
             <Heading as="h1">
               {openWindow === 'add-booking' && 'New Booking'}

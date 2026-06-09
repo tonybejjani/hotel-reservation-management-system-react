@@ -21,6 +21,7 @@ import useDeleteBooking from './useDeleteBooking';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Empty from '../../ui/Empty';
 import OneColumnWrapper from '../../ui/OneColumnWrapper';
+import { useEffect } from 'react';
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -52,6 +53,9 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   const moveBack = useMoveBack();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading || isFetching) return <Spinner />;
 
